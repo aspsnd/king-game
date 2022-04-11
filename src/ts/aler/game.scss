@@ -1,0 +1,36 @@
+.ax-cover.game {
+  background-color: transparent;
+  pointer-events: none;
+
+  .aler.g-tip,
+  .aler.g-danger {
+    background-color: transparent;
+    background-image: initial;
+    padding: 0;
+    font-size: 45px;
+    text-align: center;
+    box-shadow: initial;
+    top: 0;
+    bottom: 0;
+    height: 1.5em;
+    line-height: 1.5em;
+    transform: initial;
+    animation: upalpha 1s;
+  }
+  .aler.g-tip {
+    color: green;
+  }
+  .aler.g-danger {
+    color: red;
+  }
+  @keyframes upalpha {
+    0% {
+      opacity: 1;
+      transform: translateY(-50%);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-75%);
+    }
+  }
+}

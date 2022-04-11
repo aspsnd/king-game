@@ -1,0 +1,167 @@
+import type { RoleProto } from "../../../core/chain/role/Proto";
+import type { Role } from "../../../core/chain/role/Role";
+import { Bodies, Body } from "matter-js";
+import { ActionData } from "../../../anxi/controller/view/action";
+import { StateCache } from "../../../core/state/StateCache";
+import { EquipCache } from "../../../core/equip/EquipCache";
+
+export const RoleProto0: RoleProto = {
+  index: 0,
+  name: '孤影剑客',
+  attr: {
+    hp: 100,
+    mp: 80,
+    atk: 10,
+    def: 0,
+    crt: 0,
+    dod: 0,
+    hpr: 0,
+    mpr: 0,
+    spd: 2,
+    ats: 1,
+    timeSpeed: 1,
+    timeSlot: 0
+  },
+  level: 1,
+  group: 1,
+  skills: [],
+  fultureSkills: [{
+    index: 0,
+    cost: {
+      money: 100
+    }
+  },
+  {
+    index: 1,
+    cost: {
+      money: 200
+    }
+  },
+  {
+    index: 2,
+    cost: {
+      money: 300
+    }
+  },
+  {
+    index: 3,
+    cost: {
+      money: 800
+    }
+  },
+  {
+    index: 4,
+    cost: {
+      money: 2400
+    }
+  }],
+  talents: [],
+  talentStars: 0,
+  height: 0,
+  fexpGetter: function (level: number): number {
+    return Math.round(25 + 25 * level);
+  },
+  attrIncreaser: function (level: number) {
+    return {
+      hp: 25,
+      mp: 20,
+      atk: 3,
+      def: 1.5,
+      hpr: (level % 10 == 0) ? 1 : 0,
+      mpr: (level % 10 == 5) ? 1 : 0,
+    };
+  },
+  defaultBody: {
+    [EquipCache.head]: {
+      texture: 'static/role/0/1.png',
+      anchor: [0.45, 0.74],
+    },
+    [EquipCache.body]: {
+      texture: 'static/role/0/2.png',
+      anchor: [.5, .5]
+    },
+    [EquipCache.hand_l]: {
+      texture: 'static/role/0/3.png',
+      anchor: [1 / 6, 0.5],
+    },
+    [EquipCache.hand_r]: {
+      texture: 'static/role/0/4.png',
+      anchor: [1 / 6, 0.5],
+    },
+    [EquipCache.leg_l]: {
+      texture: 'static/role/0/5.png',
+      anchor: [0.5, 0],
+    },
+    [EquipCache.leg_r]: {
+      texture: 'static/role/0/6.png',
+      anchor: [0.5, 0],
+    },
+    [EquipCache.weapon]: {
+      texture: 'static/role/0/7.png',
+      anchor: [2 / 3, 1 / 6],
+    },
+  },
+  actions: new ActionData({
+    [StateCache.common]: {
+      [EquipCache.body]: {
+        value: [
+          [13, 51]
+        ]
+      },
+      [EquipCache.head]: {
+        frames: [0, 16, 32],
+        value: [
+          [16, 20],
+          [16, 21],
+          [16, 20]
+        ]
+      },
+      [EquipCache.hand_l]: {
+        frames: [0, 16, 32],
+        value: [
+          [14, 35, 105],
+          [14, 35, 104],
+          [14, 35, 105]
+        ]
+      },
+      [EquipCache.hand_r]: {
+        frames: [0, 16, 32],
+        value: [
+          [14, 37, 15],
+          [14, 37, 16],
+          [14, 37, 15]
+        ]
+      },
+      [EquipCache.leg_l]: {
+        value: [
+          [12, 68, 30]
+        ]
+      },
+      [EquipCache.leg_r]: {
+        value: [
+          [17, 68, -30]
+        ]
+      },
+      [EquipCache.weapon]: {
+        frames: [0, 16, 32],
+        value: [
+          [34, 40, 185],
+          [34, 40, 186],
+          [34, 40, 185]
+        ]
+      },
+      [EquipCache.wing]: {
+        frames: [0, 16, 32],
+        value: [
+          [0, 39],
+          [0, 40],
+          [0, 39],
+        ]
+      }
+    }
+  }),
+  uraSkill: 0,
+  hitGraph() {
+    return Bodies.rectangle(-20, 40, 40, 80);
+  }
+}
