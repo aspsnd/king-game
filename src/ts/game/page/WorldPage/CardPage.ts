@@ -1,4 +1,4 @@
-import { RendererViewController } from "../../../anxi/controller/base-view";
+import { WorldViewController } from "../../../anxi/controller/base-view/view/WorldViewer";
 import { CommonClock } from "../../../clocks/common";
 import { CardWorld } from "../../../core/chain/world/CardWorld";
 import { CardData } from "../../../data/card/Proto";
@@ -13,8 +13,8 @@ export class CardPage extends Page {
   refreshSelf(): void {
     super.refreshSelf();
     this.removeChildren();
-    const world = this.cardWorld = new CardWorld();
-    const renderer = new RendererViewController(world, {});
+    const world = this.cardWorld = new CardWorld(this.card, this.game.worldPage.record);
+    const renderer = world.get(WorldViewController);
     this.addChild(renderer.container);
     CommonClock.onTime(() => {
       world.onTime(1);

@@ -70,4 +70,11 @@ export const StateCache = {
     priority: autoIncreasedIndex++,
     composite: true
   },
+
+  // 缚地
+  linkGround: {
+    priority: autoIncreasedIndex++,
+    composite: true
+  }
+
 } as const;

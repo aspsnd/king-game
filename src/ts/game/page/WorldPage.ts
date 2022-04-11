@@ -2,6 +2,7 @@ import { Record } from "../../net/Record";
 import { Game } from "../Game";
 import { Page } from "./base/Page";
 import { CardPage } from "./WorldPage/CardPage";
+import { LoadPage } from "./WorldPage/LoadPage";
 import { MapPage } from "./WorldPage/MapPage";
 
 export class WorldPage extends Page {
@@ -19,9 +20,11 @@ export class WorldPage extends Page {
 
   cardPage = new CardPage(this.game);
 
+  loadPage = new LoadPage(this.game);
+
   constructor(game: Game) {
     super(game);
-    this.addChild(this.mapPage, this.cardPage);
+    this.addChild(this.mapPage, this.cardPage, this.loadPage);
   }
 
   refreshSelf(): void {

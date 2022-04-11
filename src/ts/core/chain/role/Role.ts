@@ -1,3 +1,4 @@
+import { MatrixViewer } from "../../../anxi/controller/view";
 import { RoleProtos } from "../../../data/role";
 import { Vita } from "../vita/Vita";
 import { RoleAttribute } from "./Attribute";
@@ -24,6 +25,7 @@ export class Role extends Vita<RoleAttribute> {
   declare proto: RoleProto;
   constructor(readonly savedRole: SavedRole) {
     super(savedRole, RoleProtos[savedRole.index]);
+    console.log(this.get(MatrixViewer))
   }
 
   initRole() {

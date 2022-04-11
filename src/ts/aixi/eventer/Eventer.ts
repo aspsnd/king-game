@@ -55,8 +55,8 @@ export class AnxiEventer<EventName extends BEN = BEN> {
     }
   }
   async emit(e: AnxiEvent<EventName>): Promise<void>
-  async emit(e: AnxiEvent<string>): Promise<void>
-  async emit(e: AnxiEvent<EventName> | AnxiEvent<string>) {
+  async emit(e: AnxiEvent<string | number | symbol>): Promise<void>
+  async emit(e: AnxiEvent<EventName> | AnxiEvent<string | number | symbol>) {
     this._emitingDepth++;
     if (this._listeners.has(e.name)) {
       let listeners = this._listeners.get(e.name)!;

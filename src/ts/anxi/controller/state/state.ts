@@ -1,3 +1,4 @@
+import { AnxiEvent } from "../../../aixi/eventer/Event";
 import { AnxiEventer } from "../../../aixi/eventer/Eventer";
 import { StateItem } from "./item";
 
@@ -51,6 +52,7 @@ export class State extends AnxiEventer {
         item.left > 0 || item.infinite || item.destroy();
       }
     }
+    if (this.exist()) this.emit(new AnxiEvent('time'));
   }
   insert(item: StateItem) {
     if (!this.composite) throw new Error('not complex state!');

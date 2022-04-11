@@ -65,6 +65,7 @@ export class LoginPage extends Page {
         new GTip({ content: '登录成功' });
         this.game.jumpToPage(this.game.mainPage);
       } catch (e: any) {
+        console.error(e);
         new GDanger(e?.response?.data?.msg ?? '登录失败');
       }
 
@@ -84,6 +85,7 @@ export class LoginPage extends Page {
             new GTip({ content: '登录成功' });
             this.game.jumpToPage(this.game.mainPage);
           } catch (e: any) {
+            console.error(e);
             new GDanger(e?.response?.data?.msg ?? '登录失败');
           }
         })();

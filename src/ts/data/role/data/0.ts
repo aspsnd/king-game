@@ -4,6 +4,7 @@ import { Bodies, Body } from "matter-js";
 import { ActionData } from "../../../anxi/controller/view/action";
 import { StateCache } from "../../../core/state/StateCache";
 import { EquipCache } from "../../../core/equip/EquipCache";
+import { CommonJumpSpeed } from "../../../core/chain/vita/Proto";
 
 export const RoleProto0: RoleProto = {
   index: 0,
@@ -25,6 +26,8 @@ export const RoleProto0: RoleProto = {
   level: 1,
   group: 1,
   skills: [],
+  maxJumpTimes: 2,
+  jumpSpeedFunc: CommonJumpSpeed,
   fultureSkills: [{
     index: 0,
     cost: {
@@ -105,49 +108,49 @@ export const RoleProto0: RoleProto = {
     [StateCache.common]: {
       [EquipCache.body]: {
         value: [
-          [13, 51]
+          [-1, 51]
         ]
       },
       [EquipCache.head]: {
         frames: [0, 16, 32],
         value: [
-          [16, 20],
-          [16, 21],
-          [16, 20]
+          [2, 20],
+          [2, 21],
+          [2, 20]
         ]
       },
       [EquipCache.hand_l]: {
         frames: [0, 16, 32],
         value: [
-          [14, 35, 105],
-          [14, 35, 104],
-          [14, 35, 105]
+          [0, 35, 105],
+          [0, 35, 104],
+          [0, 35, 105]
         ]
       },
       [EquipCache.hand_r]: {
         frames: [0, 16, 32],
         value: [
-          [14, 37, 15],
-          [14, 37, 16],
-          [14, 37, 15]
+          [0, 37, 15],
+          [0, 37, 16],
+          [0, 37, 15]
         ]
       },
       [EquipCache.leg_l]: {
         value: [
-          [12, 68, 30]
+          [-2, 68, 30]
         ]
       },
       [EquipCache.leg_r]: {
         value: [
-          [17, 68, -30]
+          [3, 68, -30]
         ]
       },
       [EquipCache.weapon]: {
         frames: [0, 16, 32],
         value: [
-          [34, 40, 185],
-          [34, 40, 186],
-          [34, 40, 185]
+          [20, 40, 185],
+          [20, 40, 186],
+          [20, 40, 185]
         ]
       },
       [EquipCache.wing]: {
@@ -156,6 +159,22 @@ export const RoleProto0: RoleProto = {
           [0, 39],
           [0, 40],
           [0, 39],
+        ]
+      }
+    },
+    [StateCache.go]: {
+      [EquipCache.leg_l]: {
+        frames: [0, 24],
+        value: [
+          [-1, 68, 20],
+          [4, 68, -30]
+        ]
+      },
+      [EquipCache.leg_r]: {
+        frames: [0, 24],
+        value: [
+          [5, 68, -20],
+          [-2, 68, 30]
         ]
       }
     }

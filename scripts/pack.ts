@@ -100,7 +100,7 @@ const runAsserts = async () => {
       map[key] = `${index}.${ext}`;
     }
   }
-  const data2 = `export const backs = ${JSON.stringify(map, undefined, 2)};\r\n`;
+  const data2 = `export const backs: Record<string, string> = ${JSON.stringify(map, undefined, 2)};\r\n`;
   await appendFile(listFile, data2);
 
   const groundDir = './public/resources/assets/scene/ground';
@@ -116,7 +116,7 @@ const runAsserts = async () => {
       groundMap[key] = `${index}.${ext}`;
     }
   }
-  const data3 = `export const grounds = ${JSON.stringify(groundMap, undefined, 2)};\r\n`;
+  const data3 = `export const grounds: Record<string, string> = ${JSON.stringify(groundMap, undefined, 2)};\r\n`;
   await appendFile(listFile, data3);
 
 }

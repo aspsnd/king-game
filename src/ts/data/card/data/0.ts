@@ -10,7 +10,13 @@ export const CardData0: CardData = {
   back: 0,
   ground: 0,
   box: new Rectangle(0, 0, 4500, 590),
-  boxs: [],
+  boxs: [
+    new Rectangle(0, 0, 1300, 590),
+    new Rectangle(2000, 0, 2100, 590),
+    new Rectangle(1800, 0, 2900, 590),
+    new Rectangle(2600, 0, 3700, 590),
+    new Rectangle(3400, 0, 4500, 590),
+  ],
   whenCross() {
 
   },

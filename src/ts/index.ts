@@ -5,13 +5,17 @@ import { Game } from "./game/Game";
 declare const appCanvas: HTMLCanvasElement;
 
 export const init = async () => {
-  const app = new Application({
-    view: appCanvas,
-    width: gameWidth,
-    height: gameHeight,
-    antialias:true
-  });
+  try {
+    const app = new Application({
+      view: appCanvas,
+      width: gameWidth,
+      height: gameHeight,
+      antialias: true
+    });
 
-  const game = new Game(app);
-  await game.preload();
+    const game = new Game(app);
+    await game.preload();
+  }catch(e){
+    console.error(e);
+  }
 };

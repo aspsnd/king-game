@@ -1,6 +1,7 @@
 import { Sprite } from "pixi.js"
 
 export interface BackProto {
+  index: number
   children: Array<{
     texture: string
     type: 'sprite' | 'tiling'

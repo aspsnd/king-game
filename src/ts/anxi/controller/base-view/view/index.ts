@@ -27,7 +27,7 @@ export abstract class ViewController extends Controller {
       const world = this.belonger.world!;
       const worldViewer = world.get(WorldViewController) || world.get(RendererViewController);
       if(!worldViewer)throw new Error("can not add ViewController on quark whose world hasn't WorldViewController.");
-      worldViewer.container.addChild(this.container);
+      worldViewer.childContainer.addChild(this.container);
     } else {
       this.container.parent?.removeChild(this.container);
     };

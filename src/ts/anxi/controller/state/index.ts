@@ -75,12 +75,15 @@ export class StateController extends Controller {
       this.belonger!.on(new AnxiEvent('getstate', priority));
       this.belonger!.on(`getstate_${priority}`);
     }, true);
+    state.on('time', () => {
+      this.emit(new AnxiEvent(priority));
+    })
     this.stateMap.set(priority, state);
     this.states.push(state);
     return state;
   }
 
-  private _headIndex: number = 0
+  private _headIndex: number = -Infinity
   get headState(): State {
     return this.stateMap.get(this._headIndex)!;
   }

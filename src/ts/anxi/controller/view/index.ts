@@ -30,7 +30,8 @@ export class MatrixViewer extends ViewController {
 
   transform = new Matrix()
   baseAction: StandardActionStruct
-  constructor(quark: Quark, baseAction: ActionData | ActionStruct) {
+
+  constructor(quark: Quark, baseAction: ActionData | ActionStruct, readonly defaultStateIndex: number) {
     super(quark);
     this.baseAction = baseAction instanceof ActionData ? baseAction.standard : new ActionData(baseAction).standard;
   }
@@ -50,6 +51,7 @@ export class MatrixViewer extends ViewController {
     for (const [name, struct] of Object.entries(origin)) {
       const body = this.bodys[name] = new Sprite(Texture.from(struct.texture));
       body.anchor.set(...struct.anchor);
+      this.container.addChild(body);
     }
   }
   renderType: MatrixViewerRenderType = MatrixViewerRenderType.FromState
@@ -65,7 +67,7 @@ export class MatrixViewer extends ViewController {
     }
     for (const bodyIndex in this.bodys) {
       let sprite = this.bodys[bodyIndex];
-      let action = this.insertedAction?.[bodyIndex] || this.baseAction[stateIndex][bodyIndex] || this.baseAction[0][bodyIndex];
+      let action = this.insertedAction?.[bodyIndex] || this.baseAction[stateIndex]?.[bodyIndex] || this.baseAction[this.defaultStateIndex][bodyIndex];
       if (!action) continue;
       const current = getCurrent(action, time);
       let result = current instanceof Function ? current(time, this.belonger!.get(StateController), this.belonger) : current;

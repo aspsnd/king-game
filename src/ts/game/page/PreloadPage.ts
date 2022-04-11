@@ -52,9 +52,10 @@ export class PreloadPage extends Page {
 
     return new Promise<void>(resolve => {
       Loader.shared.add(statics.map(str => '/packed-resources/' + str + '.json')).load(() => {
+        Loader.shared.onProgress.detach(node);
         resolve();
       });
-      Loader.shared.onProgress.add((loader) => {
+      const node = Loader.shared.onProgress.add((loader) => {
         this.progressLine.x = (loader.progress - 100) * .01 * gameWidth;
       })
     })

@@ -52,11 +52,18 @@ export class MapPage extends Page {
 
         } else {
           this.game.worldPage.cardPage.card = cardData;
-          this.game.worldPage.jumpToPage(this.game.worldPage.cardPage);
+          this.game.worldPage.loadPage.card = cardData;
+          this.game.worldPage.jumpToPage(this.game.worldPage.loadPage);
         }
       })
 
+    }
 
+    if (__DEV__) {
+      const cardData = CardDatas[0];
+      this.game.worldPage.cardPage.card = cardData;
+      this.game.worldPage.loadPage.card = cardData;
+      this.game.worldPage.jumpToPage(this.game.worldPage.loadPage);
     }
 
   }
