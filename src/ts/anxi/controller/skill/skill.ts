@@ -1,6 +1,6 @@
 import { Quark } from "../../chain/Quark";
-import type { AnxiListener, AnxiPlainListener, BEN } from "../../../aixi/eventer/eventer";
-import { AnxiEventer } from "../../../aixi/eventer/eventer";
+import type { AnxiListener, AnxiPlainListener, BEN } from "../../../aixi/eventer/Eventer";
+import { AnxiEventer } from "../../../aixi/eventer/Eventer";
 import type { SkillProto } from "./proto";
 
 export class Skill<D extends Partial<{ [key: string]: any }> = {}, T extends {} = {}> extends AnxiEventer {

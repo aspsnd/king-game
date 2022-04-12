@@ -1,6 +1,5 @@
 import type { RoleProto } from "../../../core/chain/role/Proto";
-import type { Role } from "../../../core/chain/role/Role";
-import { Bodies, Body } from "matter-js";
+import { Bodies } from "matter-js";
 import { ActionData } from "../../../anxi/controller/view/action";
 import { StateCache } from "../../../core/state/StateCache";
 import { EquipCache } from "../../../core/equip/EquipCache";
@@ -109,57 +108,57 @@ export const RoleProto0: RoleProto = {
     [StateCache.common]: {
       [EquipCache.body]: {
         value: [
-          [-1, 51]
+          [-1, 11]
         ]
       },
       [EquipCache.head]: {
         frames: [0, 16, 32],
         value: [
-          [2, 20],
-          [2, 21],
-          [2, 20]
+          [2, -20],
+          [2, -19],
+          [2, -20]
         ]
       },
       [EquipCache.hand_l]: {
-        frames: [0, 16, 32],
+        frames: [0, -24, 32],
         value: [
-          [0, 35, 105],
-          [0, 35, 104],
-          [0, 35, 105]
+          [0, -5, 105],
+          [0, -5, 104],
+          [0, -5, 105]
         ]
       },
       [EquipCache.hand_r]: {
         frames: [0, 16, 32],
         value: [
-          [0, 37, 15],
-          [0, 37, 16],
-          [0, 37, 15]
+          [0, -3, 15],
+          [0, -3, 16],
+          [0, -3, 15]
         ]
       },
       [EquipCache.leg_l]: {
         value: [
-          [-2, 68, 30]
+          [-2, 28, 30]
         ]
       },
       [EquipCache.leg_r]: {
         value: [
-          [3, 68, -30]
+          [3, 28, -30]
         ]
       },
       [EquipCache.weapon]: {
         frames: [0, 16, 32],
         value: [
-          [20, 40, 185],
-          [20, 40, 186],
-          [20, 40, 185]
+          [20, 0, 185],
+          [20, 0, 186],
+          [20, 0, 185]
         ]
       },
       [EquipCache.wing]: {
         frames: [0, 16, 32],
         value: [
-          [0, 39],
-          [0, 40],
-          [0, 39],
+          [0, -1],
+          [0, 0],
+          [0, -1],
         ]
       }
     },
@@ -167,15 +166,15 @@ export const RoleProto0: RoleProto = {
       [EquipCache.leg_l]: {
         frames: [0, 24],
         value: [
-          [-1, 68, 20],
-          [4, 68, -30]
+          [-1, 28, 20],
+          [4, 28, -30]
         ]
       },
       [EquipCache.leg_r]: {
         frames: [0, 24],
         value: [
-          [5, 68, -20],
-          [-2, 68, 30]
+          [5, 28, -20],
+          [-2, 28, 30]
         ]
       }
     },
@@ -183,21 +182,23 @@ export const RoleProto0: RoleProto = {
       [EquipCache.leg_l]: {
         frames: [0, 15],
         value: [
-          [-1, 68, 20],
-          [4, 68, -30]
+          [-1, 28, 20],
+          [4, 28, -30]
         ]
       },
       [EquipCache.leg_r]: {
         frames: [0, 15],
         value: [
-          [5, 68, -20],
-          [-2, 68, 30]
+          [5, 28, -20],
+          [-2, 28, 30]
         ]
       }
     }
   }),
   uraSkill: 0,
   hitGraph() {
-    return Bodies.rectangle(-20, 40, 40, 80);
+    return Bodies.rectangle(0, 0, 40, 80, {
+      isSensor: true
+    });
   }
 }

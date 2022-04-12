@@ -25,7 +25,6 @@ export class Role extends Vita<RoleAttribute> {
   declare proto: RoleProto;
   constructor(readonly savedRole: SavedRole) {
     super(savedRole, RoleProtos[savedRole.index]);
-    console.log(this.get(MatrixViewer))
   }
 
   initRole() {

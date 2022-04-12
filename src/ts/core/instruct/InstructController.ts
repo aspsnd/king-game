@@ -33,6 +33,7 @@ export class InstructController extends Controller {
         stateController.setStateInfinite(StateCache.run, true);
       } else {
         belonger.face = -1;
+        stateController.setStateInfinite(StateCache.run, false);
         stateController.setStateInfinite(StateCache.go, true);
       }
     })
@@ -44,6 +45,7 @@ export class InstructController extends Controller {
         stateController.setStateInfinite(StateCache.run, true);
       } else {
         belonger.face = 1;
+        stateController.setStateInfinite(StateCache.run, false);
         stateController.setStateInfinite(StateCache.go, true);
       }
     });

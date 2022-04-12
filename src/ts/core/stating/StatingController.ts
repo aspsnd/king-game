@@ -24,11 +24,13 @@ export class StatingController extends Controller {
 
     const jump = stateController.get(StateCache.jump)!;
 
+    const jumpSec = stateController.get(StateCache.jumpSec)!;
+
     stateController.on(StateCache.jump, () => {
       belonger.y -= belonger.proto.jumpSpeedFunc(0, jump.time, speed.value);
     });
     stateController.on(StateCache.jumpSec, () => {
-      belonger.y -= belonger.proto.jumpSpeedFunc(1, jump.time, speed.value);
+      belonger.y -= belonger.proto.jumpSpeedFunc(1, jumpSec.time, speed.value);
     });
 
     const drop = stateController.get(StateCache.drop)!;

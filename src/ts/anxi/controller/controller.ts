@@ -1,5 +1,5 @@
 import { Quark } from "../chain/Quark";
-import { AnxiEventer, BEN } from "../../aixi/eventer/eventer";
+import { AnxiEventer, BEN } from "../../aixi/eventer/Eventer";
 
 
 export interface RelaxController<D extends {} = {}> {

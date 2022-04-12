@@ -58,8 +58,8 @@ export class PhysicsWorldController extends Controller {
         const pairs = e.pairs;
         for (const pair of pairs) {
           const { bodyA, bodyB } = pair;
-          bodyA[PhysicsControllerFlag]?.emit(new AnxiEvent(en, bodyB[PhysicsControllerFlag]));
-          bodyB[PhysicsControllerFlag]?.emit(new AnxiEvent(en, bodyA[PhysicsControllerFlag]));
+          bodyA[PhysicsControllerFlag]?.emit(new AnxiEvent(en, bodyB[PhysicsControllerFlag], e));
+          bodyB[PhysicsControllerFlag]?.emit(new AnxiEvent(en, bodyA[PhysicsControllerFlag], e));
         };
       });
     }

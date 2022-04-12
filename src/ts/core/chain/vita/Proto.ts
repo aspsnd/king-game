@@ -32,7 +32,7 @@ export interface VitaProto {
   height: number
   defaultBody: BaseBodyStruct
   actions: ActionData | ActionStruct
-  hitGraph(role: Vita<any>): Body
+  hitGraph(vita: Vita<any>): Body
   maxJumpTimes: number
   jumpSpeedFunc: JumpSpeedFunc
   dropSpeedFunc: DropSpeedFunc

@@ -76,7 +76,7 @@ export class State extends AnxiEventer {
     item.destroy();
   }
   clear() {
-    this._left = 0;
+    this.left = 0;
     this.infinite = false;
     this.items.forEach(item => item.destroy());
     this.items = [];

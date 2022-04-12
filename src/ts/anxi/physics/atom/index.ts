@@ -1,6 +1,5 @@
 import Matter, { Body } from "matter-js";
-import { Atom } from "../../chain/Atom";
-import { MoveStruct } from "../../chain/Quark";
+import { MoveStruct, Quark } from "../../chain/Quark";
 import { Controller } from "../../controller/controller";
 import { PhysicsControllerFlag } from "../symbol";
 import { PhysicsWorldController } from "../world";
@@ -16,10 +15,10 @@ export type PhysicsControllerOptions<T extends boolean = boolean> = T extends tr
   composite?: Matter.Composite
 };
 export type PhysicsControllerEventNames = 'collisionStart' | 'collisionActive' | 'collisionEnd';
-export class PhysicsController<T extends boolean> extends Controller<Atom, PhysicsControllerEventNames> {
+export class PhysicsController<T extends boolean> extends Controller<Quark, PhysicsControllerEventNames> {
   box: T extends true ? Matter.Body : Matter.Composite
-  constructor(atom: Atom, readonly options: PhysicsControllerOptions<T>, public updateFunc?: (_: PhysicsController<T>) => void) {
-    super(atom, true);
+  constructor(quark: Quark, readonly options: PhysicsControllerOptions<T>, public updateFunc?: (_: PhysicsController<T>) => void) {
+    super(quark, true);
     if (options.isBody) {
       this.box = (options.body ?? Matter.Body.create(options.option ?? {})) as this['box'];
     } else {

@@ -1,11 +1,14 @@
 import { Graphics } from "pixi.js";
 import { Atom } from "../../../anxi/chain/Atom";
+import { MoveStruct } from "../../../anxi/chain/Quark";
 import { SkillController } from "../../../anxi/controller/skill";
 import { StateController } from "../../../anxi/controller/state";
 import { MatrixViewer } from "../../../anxi/controller/view";
+import { PhysicsController } from "../../../anxi/physics/atom";
 import { InstructController } from "../../instruct/InstructController";
 import { StateCache } from "../../state/StateCache";
 import { StatingController } from "../../stating/StatingController";
+import { Wall } from "../wall/Wall";
 import { VitaAttribute } from "./Attribute";
 import { VitaProto } from "./Proto";
 import { SavedVita } from "./SavedVita";
@@ -36,7 +39,14 @@ export class Vita<B extends VitaAttribute> extends Atom<B>{
   viewController!: MatrixViewer;
   skillController!: SkillController;
   instructController!: InstructController;
+  physicsController!: PhysicsController<true>;
   statingController!: StatingController;
+
+  currentGround?: Wall
+
+  forbidRight?: Wall
+  forbidLeft?: Wall
+
 
   constructor(readonly savedVita: SavedVita, readonly proto: VitaProto) {
     super(savedVita.attr as B);
@@ -48,12 +58,14 @@ export class Vita<B extends VitaAttribute> extends Atom<B>{
 
   init() {
     this.initControllers();
+    this.initForbidden();
   }
 
   initControllers() {
 
     this.stateController = new StateController(this, StateCache);
     this.stateController.setStateInfinite(StateCache.common, true);
+    this.stateController.setStateInfinite(StateCache.drop, true);
 
     this.statingController = new StatingController(this);
 
@@ -66,6 +78,23 @@ export class Vita<B extends VitaAttribute> extends Atom<B>{
     this.skillController = new SkillController(this);
 
     this.instructController = new InstructController(this);
+
+    this.physicsController = new PhysicsController(this, {
+      isBody: true,
+      body: this.proto.hitGraph(this),
+    });
+    this.physicsController.box.collisionFilter.category = 0b10000000;
+    this.physicsController.box.collisionFilter.mask = 0b00110000;
+    this.physicsController.box.collisionFilter.group = -1;
+
+  }
+
+  initForbidden() {
+    this.on('movex', e => {
+      const util = e.data[0] as MoveStruct;
+      if (this.forbidLeft && util.value < util.old) util.value = util.old;
+      if (this.forbidRight && util.value > util.old) util.value = util.old;
+    });
   }
 
   toJson(): SavedVita {

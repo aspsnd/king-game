@@ -8,7 +8,6 @@ export const CardData1: CardData = {
   position: [350, 240],
   crossOpen: [],
   back: 1,
-  ground: 1,
   box: new Rectangle(0, 0, 960, 590),
   boxs: [],
   whenCross() {

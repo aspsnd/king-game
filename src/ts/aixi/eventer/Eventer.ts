@@ -39,6 +39,8 @@ export class AnxiEventer<EventName extends BEN = BEN> {
   on(event: EventName | AnxiEvent<EventName>): void
   on(event: BEN | AnxiEvent<BEN>): void
   on(nameOrEvent: EventName | AnxiEvent<EventName> | BEN | AnxiEvent<BEN>, handler?: AnxiPlainHandler<EventName> | AnxiPlainHandler<BEN>, always = false): AnxiPlainListener<EventName> | AnxiPlainListener<BEN> | undefined {
+    // console.log(nameOrEvent,handler)
+    // if (!handler) console.log(nameOrEvent);
     if (handler) {
       return this.addEventListener(nameOrEvent as EventName, handler as AnxiPlainHandler<EventName>, always);
     } else {

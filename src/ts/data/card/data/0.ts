@@ -8,7 +8,6 @@ export const CardData0: CardData = {
   position: [285, 165],
   crossOpen: [1, 2],
   back: 0,
-  ground: 0,
   box: new Rectangle(0, 0, 4500, 590),
   boxs: [
     new Rectangle(0, 0, 1300, 590),
@@ -23,7 +22,11 @@ export const CardData0: CardData = {
   whenFirstCross() {
 
   },
-  walls: [],
+  walls: [
+    [0, 2250, 520],
+    [1, 500, 300],
+    [1, 600, 150],
+  ],
   monsts: [],
   boss: []
 }

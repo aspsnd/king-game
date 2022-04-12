@@ -112,8 +112,6 @@ export class StateController extends Controller {
       const state = this.stateMap.get(index);
       if (!state?.exist()) continue;
       state.clear();
-      this.belonger!.on(new AnxiEvent(`losestate`, index));
-      this.belonger!.on(new AnxiEvent(`losestate_${index}`));
     }
   }
 

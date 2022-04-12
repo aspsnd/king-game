@@ -2,6 +2,7 @@ import { Filter, Loader, Sprite } from "pixi.js";
 import { CommonClock } from "../../../clocks/common";
 import { BackProtos } from "../../../data/back";
 import { CardData } from "../../../data/card/Proto";
+import { WallProtos } from "../../../data/wall";
 import { backs } from "../../../resources/list";
 import { LoadingFilter } from "../../../shaders/loading";
 import { directStatic } from "../../../util/texture";
@@ -27,10 +28,15 @@ export class LoadPage extends Page {
     const filter = new LoadingFilter();
     bg.filters = [filter];
 
-    const resources = [];
+    const resources: string[] = [];
     for (const item of BackProtos[this.card.back].children) {
       resources.push('/packed-resources/' + backs[item.texture]);
     }
+
+    for (const item of this.card.walls) {
+      if (WallProtos[item[0]].texture.startsWith('assets')) resources.push(WallProtos[item[0]].texture);
+    }
+
     Loader.shared.add(resources).load(() => {
       Loader.shared.onProgress.detach(node);
       this.game.worldPage.jumpToPage(this.game.worldPage.cardPage);

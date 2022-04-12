@@ -1,5 +1,7 @@
 declare const __DEV__: boolean;
 
+declare const appCanvas: HTMLCanvasElement;
+
 type QuarkEvents = 'time' | `time_${number}`
   | 'runchange' | 'start' | 'stop'
   | 'getworld' | 'losechild' | 'loseparent' | 'loseworld' | 'getchild' | 'getparent'
@@ -25,3 +27,4 @@ declare namespace Matter {
     [controller]: import('./src/ts/anxi/physics/atom/index').PhysicsController<false>
   }
 }
+

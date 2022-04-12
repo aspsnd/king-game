@@ -1,6 +1,6 @@
 import { RelaxController } from "../controller/controller";
-import { AnxiEvent } from "../../aixi/eventer/event";
-import { AnxiEventer } from "../../aixi/eventer/eventer";
+import { AnxiEvent } from "../../aixi/eventer/Event";
+import { AnxiEventer } from "../../aixi/eventer/Eventer";
 import type { World } from "./World";
 
 export interface MoveStruct {
@@ -12,7 +12,6 @@ export interface MoveStruct {
  * 具有时间速度，位移拦截，父子关系等概念
  */
 export class Quark extends AnxiEventer<GlobalAnxiMixins.WholeQuarkEvents> {
-
 
   shadow<T extends RelaxController, K extends Exclude<keyof T['data'], symbol>>(constructor: new (...args: any[]) => T, method: `${'get' | 'lose'}${K}`, cb: (v: T['data'][K]) => void) {
     this.on(`$data_${constructor.name}_${method}`, e => {
@@ -174,8 +173,8 @@ export class Quark extends AnxiEventer<GlobalAnxiMixins.WholeQuarkEvents> {
 
 
   // 位置属性
-  private _x = 0
-  private _y = 0
+  _x = 0
+  _y = 0
   get x() {
     return this._x;
   }
