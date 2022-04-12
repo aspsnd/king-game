@@ -26,7 +26,6 @@ export class InstructController extends Controller {
       }
     });
     this.registerLivingHandler(Instructs.wantleft, () => {
-      if (belonger.dead) return;
       if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority, StateCache.attack)) return;
       if (stateController.some(StateCache.go) && belonger.face == -1) return;
       if (belonger.canRun() && belonger.face == -1) {
@@ -38,7 +37,6 @@ export class InstructController extends Controller {
       }
     })
     this.registerLivingHandler(Instructs.wantright, () => {
-      if (belonger.dead) return;
       if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority, StateCache.attack)) return;
       if (stateController.some(StateCache.go) && belonger.face == 1) return;
       if (belonger.canRun() && belonger.face == 1) {
@@ -51,21 +49,18 @@ export class InstructController extends Controller {
     });
 
     this.registerLivingHandler(Instructs.cancelleft, () => {
-      if (belonger.dead) return;
       if (belonger.face == 1) return;
       stateController.setStateInfinite(StateCache.go, false);
       stateController.setStateInfinite(StateCache.run, false);
     });
 
     this.registerLivingHandler(Instructs.cancelright, () => {
-      if (belonger.dead) return;
       if (belonger.face == -1) return;
       stateController.setStateInfinite(StateCache.go, false);
       stateController.setStateInfinite(StateCache.run, false);
     });
 
     this.registerLivingHandler(Instructs.wantjump, () => {
-      if (belonger.dead) return;
       if (stateController.some(StateCache.hard.priority, StateCache.attack, StateCache.beHitBehind, StateCache.dizzy.priority, StateCache.linkGround.priority)) return;
       if (this.maxJumpTimes < 1 || this.jumpTimes == this.maxJumpTimes) return;
 
@@ -77,6 +72,33 @@ export class InstructController extends Controller {
         stateController.setStateLeft(StateCache.jumpSec, 30);
       }
     });
+
+    this.registerLivingHandler(Instructs.wantdown, () => {
+      if (stateController.some(
+        StateCache.drop,
+        StateCache.jump,
+        StateCache.jumpSec,
+        StateCache.hover,
+        StateCache.linkGround.priority
+      )) return;
+
+      //TODO 在地板上， 且地板可以下跳
+
+      // TODO下落当前地板
+      stateController.setStateInfinite(StateCache.drop, true);
+
+    });
+
+    this.registerLivingHandler(Instructs.wantdrop, () => {
+      if (stateController.some(
+        StateCache.drop,
+        StateCache.jump,
+        StateCache.jumpSec,
+        StateCache.hover,
+        StateCache.onGround
+      )) return;
+      stateController.setStateInfinite(StateCache.drop, true);
+    })
 
   }
   registerLivingHandler(name: BEN, handler: AnxiPlainHandler<BEN>) {

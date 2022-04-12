@@ -4,7 +4,7 @@ import { Bodies, Body } from "matter-js";
 import { ActionData } from "../../../anxi/controller/view/action";
 import { StateCache } from "../../../core/state/StateCache";
 import { EquipCache } from "../../../core/equip/EquipCache";
-import { CommonJumpSpeed } from "../../../core/chain/vita/Proto";
+import { CommonDropSpeed, CommonJumpSpeed } from "../../../core/chain/vita/Proto";
 
 export const RoleProto0: RoleProto = {
   index: 0,
@@ -28,6 +28,7 @@ export const RoleProto0: RoleProto = {
   skills: [],
   maxJumpTimes: 2,
   jumpSpeedFunc: CommonJumpSpeed,
+  dropSpeedFunc: CommonDropSpeed,
   fultureSkills: [{
     index: 0,
     cost: {
@@ -172,6 +173,22 @@ export const RoleProto0: RoleProto = {
       },
       [EquipCache.leg_r]: {
         frames: [0, 24],
+        value: [
+          [5, 68, -20],
+          [-2, 68, 30]
+        ]
+      }
+    },
+    [StateCache.run]: {
+      [EquipCache.leg_l]: {
+        frames: [0, 15],
+        value: [
+          [-1, 68, 20],
+          [4, 68, -30]
+        ]
+      },
+      [EquipCache.leg_r]: {
+        frames: [0, 15],
         value: [
           [5, 68, -20],
           [-2, 68, 30]

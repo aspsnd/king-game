@@ -38,6 +38,13 @@ export class InstructEmitter extends Controller {
         case 2: belonger.emit(new AnxiEvent(Instructs.wantleft)); break;
         case 3: belonger.emit(new AnxiEvent(Instructs.wantright)); break;
         case 5: belonger.emit(new AnxiEvent(GlobalDowning[keys[1]] ? Instructs.wantdown : Instructs.wantjump)); break;
+        case 6: belonger.emit(new AnxiEvent(Instructs.wantskill, 0)); break;
+        case 7: belonger.emit(new AnxiEvent(Instructs.wantskill, 1)); break;
+        case 8: belonger.emit(new AnxiEvent(Instructs.wantskill, 2)); break;
+        case 9: belonger.emit(new AnxiEvent(Instructs.wantskill, 3)); break;
+        case 10: belonger.emit(new AnxiEvent(Instructs.wantskill, 4)); break;
+        case 11: belonger.emit(new AnxiEvent(Instructs.wantura, 1)); break;
+        case 12: belonger.emit(new AnxiEvent(Instructs.wantskill, /* 法宝技能 */9)); break;
       }
     })
     this.listeners.push(listener1);
@@ -52,6 +59,12 @@ export class InstructEmitter extends Controller {
       switch (index) {
         case 2: belonger.emit(new AnxiEvent(Instructs.cancelleft)); break;
         case 3: belonger.emit(new AnxiEvent(Instructs.cancelright)); break;
+        case 6: belonger.emit(new AnxiEvent(Instructs.cancelskill, 0)); break;
+        case 7: belonger.emit(new AnxiEvent(Instructs.cancelskill, 1)); break;
+        case 8: belonger.emit(new AnxiEvent(Instructs.cancelskill, 2)); break;
+        case 9: belonger.emit(new AnxiEvent(Instructs.cancelskill, 3)); break;
+        case 10: belonger.emit(new AnxiEvent(Instructs.cancelskill, 4)); break;
+        case 12: belonger.emit(new AnxiEvent(Instructs.cancelskill, /* 法宝技能 */9)); break;
       }
     })
     this.listeners.push(listener2);

@@ -13,5 +13,9 @@ export const Instructs = {
   wantdrop: autoIncreasedInstruct++,
   wantmobilestans: autoIncreasedInstruct++,
   wantmobilego: autoIncreasedInstruct++,
-  wantmobilerun: autoIncreasedInstruct++
+  wantmobilerun: autoIncreasedInstruct++,
+  wantskill: autoIncreasedInstruct++,
+  finishcard: autoIncreasedInstruct++,
+  wantura: autoIncreasedInstruct++,
+  cancelskill: autoIncreasedInstruct++
 } as const;

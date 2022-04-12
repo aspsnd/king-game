@@ -14,3 +14,14 @@ declare namespace GlobalAnxiMixins {
     stateController: 'losestate' | 'getstate' | `losestate_${number}` | `getstate_${number}` | 'headstatechange'
   }
 }
+
+
+declare namespace Matter {
+  const controller: import('./src/ts/anxi/physics/symbol').PhysicsControllerFlag;
+  export interface Body {
+    [controller]: import('./src/ts/anxi/physics/atom/index').PhysicsController<true>
+  }
+  export interface Composite {
+    [controller]: import('./src/ts/anxi/physics/atom/index').PhysicsController<false>
+  }
+}

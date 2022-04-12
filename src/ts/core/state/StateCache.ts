@@ -1,5 +1,9 @@
 let autoIncreasedIndex = -99999;
 export const StateCache = {
+
+  // 在地面上
+  onGround: -101,
+  // 通常状态，永久持有
   common: -100,
   // 休息动画
   rest: -99,

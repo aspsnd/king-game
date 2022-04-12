@@ -80,7 +80,8 @@ export class Vita<B extends VitaAttribute> extends Atom<B>{
 
   canRun() {
     var ps = this.stateController.get(StateCache.go)!;
-    return this.time - ps.time < 25 && this.time > 25;
+    const psTime = ps.lastGet + ps.time;
+    return this.time - psTime < 25 && this.time > 25;
   }
 
 }
