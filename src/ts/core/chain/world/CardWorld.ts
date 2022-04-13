@@ -6,7 +6,7 @@ import { gameHeight, gameWidth } from "../../../config";
 import { CardData } from "../../../data/card/Proto";
 import { WallProtos } from "../../../data/wall";
 import { Record } from "../../../net/Record";
-import { DefaultPlayer1Keys, DefaultPlayer2Keys, InstructEmitter } from "../../instruct/InstructEmitter";
+import { DefaultPlayer1Keys, DefaultPlayer2Keys, InstructEmitter } from "../../controller/instruct/InstructEmitter";
 import { Role } from "../role/Role";
 import { SavedRole } from "../role/SavedRole";
 import { WallProto } from "../wall/Proto";
@@ -57,7 +57,7 @@ export class CardWorld extends World {
 
     let dev: PhysicsWorldOptions['dev'] = undefined;
     let devCanvas: PhysicsWorldOptions['devCanvas'] = undefined;
-    if (__DEV__) {
+    if (__DEV__ && false) {
       const canvas = document.createElement('canvas');
       canvas.style.position = 'absolute';
       canvas.style.width = appCanvas.offsetWidth + 'px';
@@ -68,7 +68,7 @@ export class CardWorld extends World {
 
 
       setTimeout(() => {
-        canvas.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        canvas.style.backgroundColor = 'rgba(0,0,0,0.1)';
       }, 100);
 
       devCanvas = canvas;

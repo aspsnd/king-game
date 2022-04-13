@@ -5,11 +5,13 @@ import type { SkillProto } from "./proto";
 
 export class Skill<D extends Partial<{ [key: string]: any }> = {}, T extends {} = {}> extends AnxiEventer {
 
+  index: number
   name: string
   data!: D
   active: boolean
   cancel: SkillProto<T, D>['canceler']
   execute: SkillProto<T, D>['executer']
+  canExecute: SkillProto<T, D>['exeHelper']
   extra: SkillProto<T, D>['extra']
   _initFunc: SkillProto<T, D>['_init']
   waitTime: SkillProto<T, D>['waitTime']
@@ -21,9 +23,11 @@ export class Skill<D extends Partial<{ [key: string]: any }> = {}, T extends {} 
   constructor(public proto: SkillProto<T, D>) {
     super();
     this.active = proto._active;
+    this.index = proto.index;
     this.name = proto.name;
     this.cancel = proto.cancel;
     this.execute = proto.executer;
+    this.canExecute = proto.exeHelper;
     this.extra = proto.extra;
     this._initFunc = proto._init;
     this.waitTime = proto.waitTime;

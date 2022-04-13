@@ -1,13 +1,17 @@
 import type { RoleProto } from "../../../core/chain/role/Proto";
 import { Bodies } from "matter-js";
 import { ActionData } from "../../../anxi/controller/view/action";
-import { StateCache } from "../../../core/state/StateCache";
+import { StateCache } from "../../../core/controller/state/StateCache";
 import { EquipCache } from "../../../core/equip/EquipCache";
 import { CommonDropSpeed, CommonJumpSpeed } from "../../../core/chain/vita/Proto";
 
 export const RoleProto0: RoleProto = {
   index: 0,
   name: '孤影剑客',
+  restInterval: 60 * 5,
+  restTime: 110,
+  needRest: true,
+  attack: 0,
   attr: {
     hp: 100,
     mp: 80,
@@ -192,6 +196,90 @@ export const RoleProto0: RoleProto = {
           [5, 28, -20],
           [-2, 28, 30]
         ]
+      }
+    },
+    [StateCache.rest]: {
+      [EquipCache.leg_l]: {
+        frames: [0, 10, 55, 100, 110],
+        value: [
+          [-5, 28, 20],
+          [-5, 28, 10],
+          [-5, 28, 0],
+          [-5, 28, 10],
+          [-5, 28, 20],
+        ]
+      },
+      [EquipCache.body]: {
+        frames: [0, 10, 55, 100, 110],
+        value: [
+          [-4, 11],
+          [-7, 11],
+          [-10, 11],
+          [-7, 11],
+          [-4, 11],
+        ]
+      },
+      [EquipCache.leg_r]: {
+        frames: [0, 10, 55, 100, 110],
+        value: [
+          [0, 28, -40],
+          [-3, 28, -50],
+          [-5, 28, -60],
+          [-3, 28, -50],
+          [0, 28, -40],
+        ]
+      },
+      [EquipCache.hand_l]: {
+        frames: [0, 10, 55, 100, 110],
+        value: [
+          [-3, -5, 105],
+          [-6, -5, 105],
+          [-9, -5, 105],
+          [-6, -5, 105],
+          [-3, -5, 105],
+        ]
+      },
+      [EquipCache.hand_r]: {
+        frames: [0, 10, 55, 100, 110],
+        value: [
+          [-4, -3, 19],
+          [-7, -3, 20],
+          [-10, -3, 21],
+          [-7, -3, 20],
+          [-4, -3, 19],
+        ]
+      },
+      [EquipCache.weapon]: {
+        frames: [0, 100, 110],
+        value: [
+          [19, 0, 185 + 12 * 1],
+          [10, 5, 185 + 12 * 130],
+          [10, 5, 185 + 12 * 130],
+        ]
+      },
+      [EquipCache.head]: {
+        frames: [0, 10, 55, 100, 110],
+        value: [
+          [-1, -20],
+          [-4, -19],
+          [-6, -19],
+          [-4, -19],
+          [-1, -20],
+        ]
+      }
+    },
+    [StateCache.beHitBehind]: {
+      [EquipCache.hand_r]: {
+        value: [[0, -3, 65]]
+      },
+      [EquipCache.weapon]: {
+        value: [[11, 20, -60]]
+      },
+      [EquipCache.head]: {
+        value: [[2, -20, -10]]
+      },
+      [EquipCache.leg_r]: {
+        value: [[3, 28, -15]]
       }
     }
   }),

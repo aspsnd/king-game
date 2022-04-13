@@ -1,6 +1,6 @@
-import { Controller } from "../../anxi/controller/controller";
-import { VitaAttribute } from "../chain/vita/Attribute";
-import { Vita } from "../chain/vita/Vita";
+import { Controller } from "../../../anxi/controller/controller";
+import { VitaAttribute } from "../../chain/vita/Attribute";
+import { Vita } from "../../chain/vita/Vita";
 import { StateCache } from "../state/StateCache";
 
 export class StatingController extends Controller {
@@ -57,6 +57,16 @@ export class StatingController extends Controller {
       if (stateController.some(StateCache.jump, StateCache.jumpSec, StateCache.hover, StateCache.onGround)) return;
       stateController.setStateInfinite(StateCache.drop, true);
     })
+
+    if (belonger.proto.needRest) {
+      const common = stateController.get(StateCache.common)!;
+      const { restInterval, restTime } = belonger.proto;
+      stateController.on(StateCache.common, () => {
+        if (common.headTime >= restInterval) {
+          stateController.setStateLeft(StateCache.rest, restTime);
+        }
+      })
+    }
 
   }
 }

@@ -36,4 +36,8 @@ export interface VitaProto {
   maxJumpTimes: number
   jumpSpeedFunc: JumpSpeedFunc
   dropSpeedFunc: DropSpeedFunc
+  restInterval: number
+  restTime: number
+  needRest: boolean
+  attack: number
 }

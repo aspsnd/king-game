@@ -1,9 +1,9 @@
-import { AnxiEvent } from "../../aixi/eventer/Event";
-import { AnxiPlainListener, BEN } from "../../aixi/eventer/Eventer";
-import { Controller } from "../../anxi/controller/controller";
-import { GlobalDowning, GlobalEventCaster } from "../../util/globalcatster";
-import { VitaAttribute } from "../chain/vita/Attribute";
-import { Vita } from "../chain/vita/Vita";
+import { AnxiEvent } from "../../../aixi/eventer/Event";
+import { AnxiPlainListener, BEN } from "../../../aixi/eventer/Eventer";
+import { Controller } from "../../../anxi/controller/controller";
+import { GlobalDowning, GlobalEventCaster } from "../../../util/GlobalCatster";
+import { VitaAttribute } from "../../chain/vita/Attribute";
+import { Vita } from "../../chain/vita/Vita";
 import { Instructs } from "./const";
 
 export const DefaultPlayer1Keys = 'wsadjkyuiol h'.split('');
@@ -37,6 +37,7 @@ export class InstructEmitter extends Controller {
       switch (index) {
         case 2: belonger.emit(new AnxiEvent(Instructs.wantleft)); break;
         case 3: belonger.emit(new AnxiEvent(Instructs.wantright)); break;
+        case 4: belonger.emit(new AnxiEvent(Instructs.wantattack)); break;
         case 5: belonger.emit(new AnxiEvent(GlobalDowning[keys[1]] ? Instructs.wantdown : Instructs.wantjump)); break;
         case 6: belonger.emit(new AnxiEvent(Instructs.wantskill, 0)); break;
         case 7: belonger.emit(new AnxiEvent(Instructs.wantskill, 1)); break;

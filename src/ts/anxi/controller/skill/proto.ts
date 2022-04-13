@@ -9,7 +9,7 @@ export interface HandlerGetter<D, T> {
 
 export class SkillProto<T extends {} = {}, D extends {} = {}>{
 
-  constructor(public name: string, public extra?: T) { }
+  constructor(readonly index: number, readonly name: string, readonly extra?: T) { }
 
   _init: ((this: Skill<D>, data: D) => void) = () => { }
 
@@ -53,8 +53,8 @@ export class SkillProto<T extends {} = {}, D extends {} = {}>{
     return this;
   }
 
-  exeHelper: ((this: Skill) => boolean) = () => true
-  canExecute(helper: ((this: Skill) => boolean)) {
+  exeHelper: ((this: Skill<D>) => boolean) = () => true
+  canExecute(helper: ((this: Skill<D>) => boolean)) {
     this.exeHelper = helper;
     return this;
   }

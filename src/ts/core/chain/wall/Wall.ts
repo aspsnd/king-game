@@ -4,7 +4,7 @@ import { StateItem } from "../../../anxi/controller/state/item";
 import { ConstViewer } from "../../../anxi/controller/view-const";
 import { PhysicsController } from "../../../anxi/physics/atom";
 import { directBy, directStatic } from "../../../util/texture";
-import { StateCache } from "../../state/StateCache";
+import { StateCache } from "../../controller/state/StateCache";
 import { VitaAttribute } from "../vita/Attribute";
 import { Vita } from "../vita/Vita";
 import { WallProto } from "./Proto";

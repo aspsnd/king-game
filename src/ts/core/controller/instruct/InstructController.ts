@@ -1,8 +1,8 @@
-import { AnxiEvent } from "../../aixi/eventer/Event";
-import { AnxiPlainHandler, BEN } from "../../aixi/eventer/Eventer";
-import { Controller } from "../../anxi/controller/controller";
-import { VitaAttribute } from "../chain/vita/Attribute";
-import { Vita } from "../chain/vita/Vita";
+import { AnxiEvent } from "../../../aixi/eventer/Event";
+import { AnxiPlainHandler, BEN } from "../../../aixi/eventer/Eventer";
+import { Controller } from "../../../anxi/controller/controller";
+import { VitaAttribute } from "../../chain/vita/Attribute";
+import { Vita } from "../../chain/vita/Vita";
 import { StateCache } from "../state/StateCache";
 import { Instructs } from "./const";
 
@@ -18,7 +18,7 @@ export class InstructController extends Controller {
     this.maxJumpTimes = belonger.proto.maxJumpTimes;
     const { stateController } = belonger;
     this.registerLivingHandler(Instructs.wantgo, (e: AnxiEvent) => {
-      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority, StateCache.attack, StateCache.go)) return;
+      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority, StateCache.go)) return;
       if (e.data[0] === true) {
         stateController.setStateInfinite(StateCache.go, true);
       } else {
@@ -26,7 +26,7 @@ export class InstructController extends Controller {
       }
     });
     this.registerLivingHandler(Instructs.wantleft, () => {
-      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority, StateCache.attack)) return;
+      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority)) return;
       if (stateController.some(StateCache.go) && belonger.face == -1) return;
       if (belonger.canRun() && belonger.face == -1) {
         stateController.setStateInfinite(StateCache.go, false);
@@ -38,7 +38,7 @@ export class InstructController extends Controller {
       }
     })
     this.registerLivingHandler(Instructs.wantright, () => {
-      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority, StateCache.attack)) return;
+      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority)) return;
       if (stateController.some(StateCache.go) && belonger.face == 1) return;
       if (belonger.canRun() && belonger.face == 1) {
         stateController.setStateInfinite(StateCache.go, false);
@@ -100,6 +100,12 @@ export class InstructController extends Controller {
         StateCache.onGround
       )) return;
       stateController.setStateInfinite(StateCache.drop, true);
+    });
+
+    const attackSkill = belonger.skillController!.skillMap.get(belonger.proto.attack)!;
+    this.registerLivingHandler(Instructs.wantattack, () => {
+      console.log('canAttack:', attackSkill.canExecute());
+      if (attackSkill.canExecute()) attackSkill.execute();
     })
 
   }

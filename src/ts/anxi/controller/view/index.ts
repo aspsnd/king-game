@@ -69,15 +69,17 @@ export class MatrixViewer extends ViewController {
       let sprite = this.bodys[bodyIndex];
       let action = this.insertedAction?.[bodyIndex] || this.baseAction[stateIndex]?.[bodyIndex] || this.baseAction[this.defaultStateIndex][bodyIndex];
       if (!action) continue;
-      const current = getCurrent(action, time);
+      const current = getCurrent(action, this.insertedAction?.[bodyIndex] ? this.belonger.time - this.insertTime : time);
       let result = current instanceof Function ? current(time, this.belonger!.get(StateController), this.belonger) : current;
       sprite.transform.setFromMatrix(result);
     }
   }
   private _insertedActionIndex = 0
   private insertedAction?: StandardActionStruct[number | string]
+
+  private insertTime = 0
   insertAction(action: StandardActionStruct[number | string]): number {
-    // throw new Error("Method not implemented.");
+    this.insertTime = this.belonger.time;
     this._insertedActionIndex++;
     this.insertedAction = action;
     return this._insertedActionIndex;

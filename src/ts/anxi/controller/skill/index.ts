@@ -4,12 +4,13 @@ import { Controller } from "../controller";
 import { Skill } from "./skill";
 
 export class SkillController extends Controller {
+  skillIndexs: Record<number, number> = {}
   skills: Skill[] = []
-  skillMap = new Map<string, Skill>()
+  skillMap = new Map<number, Skill>()
 
   add(skill: Skill) {
     this.skills.push(skill);
-    this.skillMap.set(skill.name, skill);
+    this.skillMap.set(skill.index, skill);
     skill.link(this.belonger!);
     skill.init();
     for (const [k, { rely, caculator, annoy }] of Object.entries(skill.proto.initedAttrs)) {
@@ -21,7 +22,7 @@ export class SkillController extends Controller {
   }
   release(skill: Skill) {
     this.skills.splice(this.skills.indexOf(skill), 1);
-    this.skillMap.delete(skill.name);
+    this.skillMap.delete(skill.index);
     skill.remove();
     for (const [k, { rely, caculator, annoy }] of Object.entries(skill.proto.initedAttrs)) {
       const attr = this.belonger!.get(AttributeController).getAttr(k);
@@ -34,7 +35,7 @@ export class SkillController extends Controller {
   init() {
     this.belonger!.on('wantskill', e => {
       /* TODO */
-      const skill = this.skillMap.get(e.data[0]);
+      const skill = this.skillMap.get(this.skillIndexs[e.data[0]]);
       if (!skill) return;
       skill.execute();
     })

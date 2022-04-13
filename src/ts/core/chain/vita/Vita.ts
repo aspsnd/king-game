@@ -2,12 +2,14 @@ import { Graphics } from "pixi.js";
 import { Atom } from "../../../anxi/chain/Atom";
 import { MoveStruct } from "../../../anxi/chain/Quark";
 import { SkillController } from "../../../anxi/controller/skill";
+import { Skill } from "../../../anxi/controller/skill/skill";
 import { StateController } from "../../../anxi/controller/state";
 import { MatrixViewer } from "../../../anxi/controller/view";
 import { PhysicsController } from "../../../anxi/physics/atom";
-import { InstructController } from "../../instruct/InstructController";
-import { StateCache } from "../../state/StateCache";
-import { StatingController } from "../../stating/StatingController";
+import { SkillProtos } from "../../../data/skill";
+import { InstructController } from "../../controller/instruct/InstructController";
+import { StateCache } from "../../controller/state/StateCache";
+import { StatingController } from "../../controller/stating/StatingController";
 import { Wall } from "../wall/Wall";
 import { VitaAttribute } from "./Attribute";
 import { VitaProto } from "./Proto";
@@ -76,6 +78,8 @@ export class Vita<B extends VitaAttribute> extends Atom<B>{
     this.viewController.container.addChild(new Graphics().beginFill(0x008888, 1).drawRect(-200, -.5, 400, 1).endFill());
 
     this.skillController = new SkillController(this);
+
+    this.skillController.add(new Skill(SkillProtos[this.proto.attack]));
 
     this.instructController = new InstructController(this);
 

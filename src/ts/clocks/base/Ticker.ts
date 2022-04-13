@@ -1,4 +1,7 @@
 export class Ticker {
+
+  static maxCTime = 33.33;
+
   static _started = false
   static tickers = new Set<Ticker>()
   static lastTime = performance.now()
@@ -7,7 +10,7 @@ export class Ticker {
     this.lastTime = performance.now();
     const next = () => {
       const now = performance.now();
-      const cTime = now - this.lastTime;
+      const cTime = Math.min(now - this.lastTime, this.maxCTime);
       this.lastTime = now;
       for (const ticker of this.tickers) {
         ticker.ruuning && ticker.onFrame(cTime);
@@ -17,7 +20,7 @@ export class Ticker {
     requestAnimationFrame(next);
   }
   deltaTime: number
-  deltaThreshold:number
+  deltaThreshold: number
   lastTime = 0
   lastLastDelta = 0
   constructor(fps: number = 60, public aheadThresholdRate = .75) {
@@ -27,28 +30,29 @@ export class Ticker {
   }
 
   ruuning = false;
-  start(){
-    if(!Ticker._started)Ticker.start();
+  start() {
+    if (!Ticker._started) Ticker.start();
     this.lastTime = Ticker.lastTime;
     this.ruuning = true;
   }
-  stop(){
+  stop() {
     this.ruuning = false;
   }
+
   /**
    * @param delta 上一帧到现在的毫秒数
    */
   onFrame(delta: number) {
     let last = delta + this.lastLastDelta;
-    while(last > this.deltaThreshold){
+    while (last > this.deltaThreshold) {
       last -= this.deltaTime;
       this.onTime();
       this.lastTime += this.deltaThreshold;
     }
     this.lastLastDelta = last;
   }
-  onTime(){
-    for(const func of this._funcs){
+  onTime() {
+    for (const func of this._funcs) {
       func();
     }
   }
@@ -56,11 +60,11 @@ export class Ticker {
     Ticker.tickers.delete(this);
   }
 
-  private _funcs = new Set<()=>void>()
-  add(func:()=>void){
+  private _funcs = new Set<() => void>()
+  add(func: () => void) {
     this._funcs.add(func);
   }
-  remove(func:()=>void){
+  remove(func: () => void) {
     this._funcs.delete(func);
   }
 

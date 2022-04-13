@@ -37,7 +37,7 @@ export const StateCache = {
   // 禁止飞行
   banhover: 500,
   // 普通攻击
-  attack: 400,
+  attack: -201,
   // 中毒
   poison: {
     priority: -402,

@@ -4,6 +4,7 @@ export const Instructs = {
   wantgo: autoIncreasedInstruct++,
   wantleft: autoIncreasedInstruct++,
   wantright: autoIncreasedInstruct++,
+  wantattack: autoIncreasedInstruct++,
   continueleft: autoIncreasedInstruct++,
   continueright: autoIncreasedInstruct++,
   cancelleft: autoIncreasedInstruct++,
