@@ -1,4 +1,4 @@
-import { Container } from "pixi.js";
+import { Container, isMobile } from "pixi.js";
 import { World } from "../../../anxi/chain/World";
 import { WorldViewController } from "../../../anxi/controller/base-view/view/WorldViewer";
 import { PhysicsWorldController, PhysicsWorldOptions } from "../../../anxi/physics/world";
@@ -15,6 +15,7 @@ import { BackController } from "./controller/BackController";
 import { StepController } from "./controller/StepController";
 import { MoveStruct } from "../../../anxi/chain/Quark";
 import { PanelController } from "../../controller/panel/PanelController";
+import { OpenController } from "./controller/OpenController";
 
 export class CardWorld extends World {
 
@@ -31,6 +32,7 @@ export class CardWorld extends World {
   roles: Role[] = []
   stepController!: StepController;
   physicsController!: PhysicsWorldController;
+  openController!: OpenController;
 
   constructor(readonly cardData: CardData, readonly record: Record) {
     super();
@@ -67,9 +69,14 @@ export class CardWorld extends World {
     this.backController = new BackController(this, true);
     this.stepController = new StepController(this, true);
 
+    this.openController = new OpenController(this, true);
+    if (isMobile) {
+      this.openController.listenKeyboard();
+    }
+
     let dev: PhysicsWorldOptions['dev'] = undefined;
     let devCanvas: PhysicsWorldOptions['devCanvas'] = undefined;
-    if (__DEV__ && true) {
+    if (__DEV__ && false) {
       const canvas = document.createElement('canvas');
       canvas.style.position = 'absolute';
       canvas.style.width = appCanvas.offsetWidth + 'px';
@@ -77,6 +84,7 @@ export class CardWorld extends World {
 
       canvas.style.left = appCanvas.offsetLeft + 'px';
       canvas.style.top = appCanvas.offsetTop + 'px';
+      canvas.style.pointerEvents = 'none';
 
 
       setTimeout(() => {
@@ -109,6 +117,7 @@ export class CardWorld extends World {
     });
     this.backController.init();
     this.stepController.init();
+    this.openController.init();
   }
 
   initRole(proto: SavedRole, index: number) {

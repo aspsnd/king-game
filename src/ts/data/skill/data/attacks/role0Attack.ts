@@ -5,7 +5,7 @@ import { Attack } from "../../../../core/attack/Attack";
 import { VitaAttribute } from "../../../../core/chain/vita/Attribute";
 import { Vita } from "../../../../core/chain/vita/Vita";
 import { StateCache } from "../../../../core/controller/state/StateCache";
-import { EquipCache } from "../../../../core/equip/EquipCache";
+import { BodyCache } from "../../../../core/equip/BodyCache";
 import { CommonAttack } from "../helper/common";
 import { AttackProto } from "./Proto";
 
@@ -27,7 +27,7 @@ const attack0: AttackProto = {
   },
   actionData(need: number) {
     return {
-      [EquipCache.weapon]: {
+      [BodyCache.weapon]: {
         frames: [0, 12, 20].map(v => (v / 20 * need) | 0),
         value: [
           [20, 0, 185],
@@ -35,7 +35,7 @@ const attack0: AttackProto = {
           [20, 0, 185]
         ]
       },
-      [EquipCache.hand_r]: {
+      [BodyCache.hand_r]: {
         frames: [0, 12, 20].map(v => (v / 20 * need) | 0),
         value: [
           [0, -3, 15],
@@ -58,7 +58,7 @@ const attack1: AttackProto = {
   },
   actionData(need: number) {
     return {
-      [EquipCache.weapon]: {
+      [BodyCache.weapon]: {
         frames: [0, 2, 4, 6, 8, 10, 12, 14, 16].map(v => (v / 16 * need) | 0),
         value: [
           [20, 0, 185],
@@ -72,7 +72,7 @@ const attack1: AttackProto = {
           [20, 0, 185],
         ]
       },
-      [EquipCache.hand_r]: {
+      [BodyCache.hand_r]: {
         frames: [0, 2, 4, 6, 8, 10, 12, 14, 16].map(v => (v / 16 * need) | 0),
         value: [
           [0, -3, 15],

@@ -4,7 +4,7 @@ import { gameWidth } from "../../../config";
 import { directBy, directStatic } from "../../../util/texture";
 import { Role } from "../../chain/role/Role";
 import { CardWorld } from "../../chain/world/CardWorld";
-import { EquipCache } from "../../equip/EquipCache";
+import { BodyCache } from "../../equip/BodyCache";
 import { VarLine } from "./VarLine";
 
 export class PanelController extends Controller {
@@ -24,7 +24,7 @@ export class PanelController extends Controller {
     const mirror = [1, -1][index];
 
     // avatar
-    const avatar = new Sprite(directBy(role.proto.defaultBody[EquipCache.head].texture));
+    const avatar = new Sprite(directBy(role.proto.defaultBody[BodyCache.head].texture));
     avatar.anchor.set(.5, .5);
     avatar.scale.set(mirror * 1.4, 1.4);
     avatar.x = left ? 30 : gameWidth - 30;

@@ -2,7 +2,7 @@ import type { RoleProto } from "../../../core/chain/role/Proto";
 import { Bodies } from "matter-js";
 import { ActionData } from "../../../anxi/controller/view/action";
 import { StateCache } from "../../../core/controller/state/StateCache";
-import { EquipCache } from "../../../core/equip/EquipCache";
+import { BodyCache } from "../../../core/equip/BodyCache";
 import { CommonDropSpeed, CommonJumpSpeed } from "../../../core/chain/vita/Proto";
 
 export const RoleProto0: RoleProto = {
@@ -79,43 +79,43 @@ export const RoleProto0: RoleProto = {
     };
   },
   defaultBody: {
-    [EquipCache.head]: {
+    [BodyCache.head]: {
       texture: 'static/role/0/1.png',
       anchor: [0.45, 0.74],
     },
-    [EquipCache.body]: {
+    [BodyCache.body]: {
       texture: 'static/role/0/2.png',
       anchor: [.5, .5]
     },
-    [EquipCache.hand_l]: {
+    [BodyCache.hand_l]: {
       texture: 'static/role/0/3.png',
       anchor: [1 / 6, 0.5],
     },
-    [EquipCache.hand_r]: {
+    [BodyCache.hand_r]: {
       texture: 'static/role/0/4.png',
       anchor: [1 / 6, 0.5],
     },
-    [EquipCache.leg_l]: {
+    [BodyCache.leg_l]: {
       texture: 'static/role/0/5.png',
       anchor: [0.5, 0],
     },
-    [EquipCache.leg_r]: {
+    [BodyCache.leg_r]: {
       texture: 'static/role/0/6.png',
       anchor: [0.5, 0],
     },
-    [EquipCache.weapon]: {
+    [BodyCache.weapon]: {
       texture: 'static/role/0/7.png',
       anchor: [2 / 3, 1 / 6],
     },
   },
   actions: new ActionData({
     [StateCache.common]: {
-      [EquipCache.body]: {
+      [BodyCache.body]: {
         value: [
           [-1, 11]
         ]
       },
-      [EquipCache.head]: {
+      [BodyCache.head]: {
         frames: [0, 16, 32],
         value: [
           [2, -20],
@@ -123,7 +123,7 @@ export const RoleProto0: RoleProto = {
           [2, -20]
         ]
       },
-      [EquipCache.hand_l]: {
+      [BodyCache.hand_l]: {
         frames: [0, -24, 32],
         value: [
           [0, -5, 105],
@@ -131,7 +131,7 @@ export const RoleProto0: RoleProto = {
           [0, -5, 105]
         ]
       },
-      [EquipCache.hand_r]: {
+      [BodyCache.hand_r]: {
         frames: [0, 16, 32],
         value: [
           [0, -3, 15],
@@ -139,17 +139,17 @@ export const RoleProto0: RoleProto = {
           [0, -3, 15]
         ]
       },
-      [EquipCache.leg_l]: {
+      [BodyCache.leg_l]: {
         value: [
           [-2, 28, 30]
         ]
       },
-      [EquipCache.leg_r]: {
+      [BodyCache.leg_r]: {
         value: [
           [3, 28, -30]
         ]
       },
-      [EquipCache.weapon]: {
+      [BodyCache.weapon]: {
         frames: [0, 16, 32],
         value: [
           [20, 0, 185],
@@ -157,7 +157,7 @@ export const RoleProto0: RoleProto = {
           [20, 0, 185]
         ]
       },
-      [EquipCache.wing]: {
+      [BodyCache.wing]: {
         frames: [0, 16, 32],
         value: [
           [0, -1],
@@ -167,14 +167,14 @@ export const RoleProto0: RoleProto = {
       }
     },
     [StateCache.go]: {
-      [EquipCache.leg_l]: {
+      [BodyCache.leg_l]: {
         frames: [0, 24],
         value: [
           [-1, 28, 20],
           [4, 28, -30]
         ]
       },
-      [EquipCache.leg_r]: {
+      [BodyCache.leg_r]: {
         frames: [0, 24],
         value: [
           [5, 28, -20],
@@ -183,14 +183,14 @@ export const RoleProto0: RoleProto = {
       }
     },
     [StateCache.run]: {
-      [EquipCache.leg_l]: {
+      [BodyCache.leg_l]: {
         frames: [0, 15],
         value: [
           [-1, 28, 20],
           [4, 28, -30]
         ]
       },
-      [EquipCache.leg_r]: {
+      [BodyCache.leg_r]: {
         frames: [0, 15],
         value: [
           [5, 28, -20],
@@ -199,7 +199,7 @@ export const RoleProto0: RoleProto = {
       }
     },
     [StateCache.rest]: {
-      [EquipCache.leg_l]: {
+      [BodyCache.leg_l]: {
         frames: [0, 10, 55, 100, 110],
         value: [
           [-5, 28, 20],
@@ -209,7 +209,7 @@ export const RoleProto0: RoleProto = {
           [-5, 28, 20],
         ]
       },
-      [EquipCache.body]: {
+      [BodyCache.body]: {
         frames: [0, 10, 55, 100, 110],
         value: [
           [-4, 11],
@@ -219,7 +219,7 @@ export const RoleProto0: RoleProto = {
           [-4, 11],
         ]
       },
-      [EquipCache.leg_r]: {
+      [BodyCache.leg_r]: {
         frames: [0, 10, 55, 100, 110],
         value: [
           [0, 28, -40],
@@ -229,7 +229,7 @@ export const RoleProto0: RoleProto = {
           [0, 28, -40],
         ]
       },
-      [EquipCache.hand_l]: {
+      [BodyCache.hand_l]: {
         frames: [0, 10, 55, 100, 110],
         value: [
           [-3, -5, 105],
@@ -239,7 +239,7 @@ export const RoleProto0: RoleProto = {
           [-3, -5, 105],
         ]
       },
-      [EquipCache.hand_r]: {
+      [BodyCache.hand_r]: {
         frames: [0, 10, 55, 100, 110],
         value: [
           [-4, -3, 19],
@@ -249,7 +249,7 @@ export const RoleProto0: RoleProto = {
           [-4, -3, 19],
         ]
       },
-      [EquipCache.weapon]: {
+      [BodyCache.weapon]: {
         frames: [0, 100, 110],
         value: [
           [19, 0, 185 + 12 * 1],
@@ -257,7 +257,7 @@ export const RoleProto0: RoleProto = {
           [10, 5, 185 + 12 * 130],
         ]
       },
-      [EquipCache.head]: {
+      [BodyCache.head]: {
         frames: [0, 10, 55, 100, 110],
         value: [
           [-1, -20],
@@ -269,16 +269,16 @@ export const RoleProto0: RoleProto = {
       }
     },
     [StateCache.beHitBehind]: {
-      [EquipCache.hand_r]: {
+      [BodyCache.hand_r]: {
         value: [[0, -3, 65]]
       },
-      [EquipCache.weapon]: {
+      [BodyCache.weapon]: {
         value: [[11, 20, -60]]
       },
-      [EquipCache.head]: {
+      [BodyCache.head]: {
         value: [[2, -20, -10]]
       },
-      [EquipCache.leg_r]: {
+      [BodyCache.leg_r]: {
         value: [[3, 28, -15]]
       }
     }

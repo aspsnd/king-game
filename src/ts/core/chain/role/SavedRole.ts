@@ -1,3 +1,6 @@
+import { Equip } from "../../../data/thing/EquipProto"
+import { Extra } from "../../../data/thing/ExtraProto"
+import { Material } from "../../../data/thing/MaterialProto"
 import { SavedVita } from "../vita/SavedVita"
 import { RoleAttribute } from "./Attribute"
 
@@ -6,16 +9,9 @@ export interface SavedRole extends SavedVita {
   exp: number
   money: number
   bag: {
-    equip: {
-      proto: number
-    }[]
-    material: {
-      proto: number,
-      count: number
-    }[]
-    extra: {
-      proto: number
-    }[]
+    equip: Equip[]
+    material: Material[]
+    extra: Extra[]
   }
   equip: any[]
 }

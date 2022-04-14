@@ -28,7 +28,8 @@ export class InstructEmitter extends Controller {
     const { } = belonger;
 
     const listener1 = GlobalEventCaster.on('realkeydown', e => {
-      if (belonger.dead || !belonger?.world?.running) return true;
+      if (belonger.dead) return true;
+      if (!belonger.world?.running) return;
 
       const key = e.data[0].key as string;
 
@@ -51,7 +52,8 @@ export class InstructEmitter extends Controller {
     this.listeners.push(listener1);
 
     const listener2 = GlobalEventCaster.on('keyup', e => {
-      if (belonger.dead || !belonger?.world?.running) return true;
+      if (belonger.dead) return true;
+      if (!belonger.world?.running) return;
 
       const key = e.data[0].key as string;
 
