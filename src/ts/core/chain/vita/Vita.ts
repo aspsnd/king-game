@@ -10,6 +10,7 @@ import { SkillProtos } from "../../../data/skill";
 import { InstructController } from "../../controller/instruct/InstructController";
 import { StateCache } from "../../controller/state/StateCache";
 import { StatingController } from "../../controller/stating/StatingController";
+import { VarController } from "../../controller/variable/VarController";
 import { Wall } from "../wall/Wall";
 import { VitaAttribute } from "./Attribute";
 import { VitaProto } from "./Proto";
@@ -43,6 +44,7 @@ export class Vita<B extends VitaAttribute> extends Atom<B>{
   instructController!: InstructController;
   physicsController!: PhysicsController<true>;
   statingController!: StatingController;
+  var!: VarController;
 
   currentGround?: Wall
 
@@ -74,12 +76,11 @@ export class Vita<B extends VitaAttribute> extends Atom<B>{
     this.viewController = new MatrixViewer(this, this.proto.actions, StateCache.common);
     this.viewController.fromBaseBodyStruct(this.proto.defaultBody);
 
-    this.viewController.container.addChild(new Graphics().beginFill(0x008888, 1).drawRect(-.5, -200, 1, 400).endFill());
-    this.viewController.container.addChild(new Graphics().beginFill(0x008888, 1).drawRect(-200, -.5, 400, 1).endFill());
-
     this.skillController = new SkillController(this);
 
     this.skillController.add(new Skill(SkillProtos[this.proto.attack]));
+
+    this.var = new VarController(this);
 
     this.instructController = new InstructController(this);
 

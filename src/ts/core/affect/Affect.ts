@@ -68,7 +68,7 @@ export class Affect {
     if (this.hurt.real < this.reduce.real) {
       this.reduce.real = this.hurt.real;
     }
-
+    
     /**
      * 应掉血量
      */

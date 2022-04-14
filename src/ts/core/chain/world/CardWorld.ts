@@ -14,11 +14,17 @@ import { Wall } from "../wall/Wall";
 import { BackController } from "./controller/BackController";
 import { StepController } from "./controller/StepController";
 import { MoveStruct } from "../../../anxi/chain/Quark";
+import { PanelController } from "../../controller/panel/PanelController";
 
 export class CardWorld extends World {
 
   wallContainer = new Container();
   backController!: BackController;
+
+  parallelContainer = new Container();
+  handContainer = new Container();
+  guiContainer = new Container();
+  toolContainer = new Container();
 
   offset = [0, 0]
 
@@ -31,6 +37,12 @@ export class CardWorld extends World {
 
     const renderer = new WorldViewController(this);
     renderer.beforeContainer.addChild(this.wallContainer);
+    renderer.afterContainer.addChild(
+      this.parallelContainer,
+      this.handContainer,
+      this.guiContainer,
+      this.toolContainer
+    )
     this.initController();
 
     cardData.walls.map(([index, x, y]) => this.initWall(WallProtos[index], x, y));
@@ -57,7 +69,7 @@ export class CardWorld extends World {
 
     let dev: PhysicsWorldOptions['dev'] = undefined;
     let devCanvas: PhysicsWorldOptions['devCanvas'] = undefined;
-    if (__DEV__ && false) {
+    if (__DEV__ && true) {
       const canvas = document.createElement('canvas');
       canvas.style.position = 'absolute';
       canvas.style.width = appCanvas.offsetWidth + 'px';
@@ -68,7 +80,7 @@ export class CardWorld extends World {
 
 
       setTimeout(() => {
-        canvas.style.backgroundColor = 'rgba(0,0,0,0.1)';
+        canvas.style.backgroundColor = 'rgba(0,0,0,0.0)';
       }, 100);
 
       devCanvas = canvas;
@@ -106,6 +118,7 @@ export class CardWorld extends World {
     role.land(this);
     this.roles[index] = role;
     new InstructEmitter(role, [DefaultPlayer1Keys, DefaultPlayer2Keys][index]).init();
+    new PanelController(role, index).init();
 
     if (__DEV__) {
 

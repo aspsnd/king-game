@@ -104,7 +104,6 @@ export class InstructController extends Controller {
 
     const attackSkill = belonger.skillController!.skillMap.get(belonger.proto.attack)!;
     this.registerLivingHandler(Instructs.wantattack, () => {
-      console.log('canAttack:', attackSkill.canExecute());
       if (attackSkill.canExecute()) attackSkill.execute();
     })
 

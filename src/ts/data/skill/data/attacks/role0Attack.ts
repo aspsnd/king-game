@@ -54,7 +54,7 @@ const attack1: AttackProto = {
     continue: 10
   }],
   getHitBody(vita: Vita<VitaAttribute>) {
-    throw new Error("Function not implemented.");
+    return Bodies.rectangle(0, 0, 100, 50);
   },
   actionData(need: number) {
     return {
@@ -146,7 +146,7 @@ export const Role0Attack = new SkillProto<{}, D>(0, '普通攻击-孤影剑客')
     const attack = new Attack(proto, vita);
 
     // 攻击的执行
-    new CommonAttack(proto, vita, attack, needed);
+    new CommonAttack(proto, vita, attack, needed).emit();
 
   }).canExecute(function () {
     const { quark, data } = this;

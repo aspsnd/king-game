@@ -7,17 +7,17 @@ export class AttributeController<S extends string = string> extends Controller {
   attrArray: Attribute<S>[] = []
   needCompute = false
   relyChain: { [key in S]?: Attribute<S>[] } = {}
-  constructor(atom: Atom, block: Record<S, number>) {
+  constructor(atom: Atom, readonly block: Record<S, number>) {
     super(atom);
     this.from(block);
     this.compute();
   }
   from(block: Record<S, number>) {
-    for (const [p, v] of Object.entries(block) as [S, number][]) {
+    for (const p in block) {
       const attr = this.attrs[p] = new Attribute(p, this);
       this.attrArray.push(attr);
       attr.addCommonCaculator(() => {
-        attr.base += v;
+        attr.base += block[p];
       });
     }
   }
@@ -30,6 +30,12 @@ export class AttributeController<S extends string = string> extends Controller {
   init() {
     super.init();
   }
+
+  onTime(_delta: number): void {
+    super.onTime(_delta);
+    if (this.needCompute) this.compute();
+  }
+
   compute() {
     let needComputeAttr = new Set(this.attrArray);
     while (needComputeAttr.size > 0) {

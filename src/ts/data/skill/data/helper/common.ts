@@ -38,6 +38,8 @@ export class CommonAttack {
         moilTime: 0,
         dieAfterHit: false
       });
+      flyer.x = from.x;
+      flyer.y = from.y;
       flyer.land(from);
     });
 

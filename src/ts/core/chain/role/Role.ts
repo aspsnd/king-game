@@ -1,5 +1,5 @@
-import { MatrixViewer } from "../../../anxi/controller/view";
 import { RoleProtos } from "../../../data/role";
+import { LevelController } from "../../controller/level/LevelController";
 import { Vita } from "../vita/Vita";
 import { RoleAttribute } from "./Attribute";
 import { RoleProto } from "./Proto";
@@ -23,12 +23,14 @@ export const EmptySavedRole = (index: number): SavedRole => ({
 
 export class Role extends Vita<RoleAttribute> {
   declare proto: RoleProto;
+  levelController!: LevelController;
   constructor(readonly savedRole: SavedRole) {
     super(savedRole, RoleProtos[savedRole.index]);
+    this.initRole();
   }
 
   initRole() {
-
+    this.levelController = new LevelController(this);
   }
 
   toJson(): SavedRole {
