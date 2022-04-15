@@ -7,7 +7,7 @@ export interface HandlerGetter<D, T> {
   (quark: Quark, skill: Skill<D, T>): (e: AnxiEvent) => void
 }
 
-export class SkillProto<T extends {} = {}, D extends {} = {}>{
+export class SkillProto<T extends {} = { intro: string }, D extends {} = {}>{
 
   constructor(readonly index: number, readonly name: string, readonly extra?: T) { }
 

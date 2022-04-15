@@ -62,6 +62,7 @@ export class Controller<D extends Record<string, any> = {}, EN extends BEN = BEN
   }
   initDataAndSignal() {
     const self = this;
+    this.signal = {} as ControllerDataSignal<D>;
     for (const k in this.data) {
       this._data_[k] = this.data[k];
       Object.defineProperty(this.data, k, {

@@ -14,7 +14,7 @@ export const weapon1_1: EquipProto = {
   },
   views: {
     [BodyCache.weapon]: {
-      url: "statis/equip/0/1.png",
+      texture: "static/equip/weapon/1.png",
       anchor: [2 / 3, 1 / 6]
     }
   },
@@ -23,8 +23,8 @@ export const weapon1_1: EquipProto = {
   intro: "看起来像是在路边捡的",
   quality: QualityType.white,
   money: 0,
-  disUrl: 'statis/equip/0/01.png',
-  dropUrl: "statis/equip/0/1.png",
+  disUrl: 'static/equip/weapon/01.png',
+  dropUrl: "static/equip/weapon/1.png",
   isSuitForVita: function (vita: Vita<VitaAttribute>): boolean {
     return vita.proto.index === 0;
   }
@@ -38,16 +38,16 @@ export const body1_1: EquipProto = {
   },
   views: {
     [BodyCache.body]: {
-      url: "statis/equip/1/1.png",
-      anchor: [2 / 3, 1 / 6]
+      texture: "static/equip/body/1.png",
+      anchor: [.5, .5]
     }
   },
   index: 1,
   name: "普通的铠甲",
   intro: "看起来也是捡的",
   quality: QualityType.white,
-  disUrl: "statis/equip/1/01.png",
-  dropUrl: "statis/equip/1/1.png",
+  disUrl: "static/equip/body/01.png",
+  dropUrl: "static/equip/body/1.png",
   isSuitForVita: function (vita: Vita<VitaAttribute>): boolean {
     return vita.proto.index === 0;
   }

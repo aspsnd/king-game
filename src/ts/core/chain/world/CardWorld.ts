@@ -16,6 +16,9 @@ import { StepController } from "./controller/StepController";
 import { MoveStruct } from "../../../anxi/chain/Quark";
 import { PanelController } from "../../controller/panel/PanelController";
 import { OpenController } from "./controller/OpenController";
+import { generateEquip } from "../../../data/thing/EquipProto";
+import { EquipCache } from "../../controller/equip/EquipCache";
+import { EquipProtos } from "../../../data/thing";
 
 export class CardWorld extends World {
 
@@ -145,6 +148,21 @@ export class CardWorld extends World {
       const moveUtil = e.data[0] as MoveStruct;
       moveUtil.value = Math.max(box.y, Math.min(moveUtil.value, box.y + box.width));
     });
+
+    if (__DEV__ && false) {
+      const weapon = generateEquip(EquipProtos[0]);
+      const body = generateEquip(EquipProtos[1]);
+      setInterval(() => {
+        // console.log('getEquip');
+        role.equipController.data[weapon.type] = weapon;
+        role.equipController.data[body.type] = body;
+        setTimeout(() => {
+          // console.log('loseEquip');
+          role.equipController.data[weapon.type] = undefined;
+          role.equipController.data[body.type] = undefined;
+        }, 1000)
+      }, 2000);
+    }
 
   }
 

@@ -1,5 +1,6 @@
 import { RoleProtos } from "../../../data/role";
 import { BagController } from "../../controller/bag/BagController";
+import { EquipController } from "../../controller/equip/EquipController";
 import { LevelController } from "../../controller/level/LevelController";
 import { Vita } from "../vita/Vita";
 import { RoleAttribute } from "./Attribute";
@@ -14,7 +15,9 @@ export const EmptySavedRole = (index: number): SavedRole => ({
     material: [],
     extra: []
   },
-  equip: [],
+  equip: {
+
+  },
   index,
   attr: RoleProtos[index].attr,
   skills: [],
@@ -26,6 +29,7 @@ export class Role extends Vita<RoleAttribute> {
   declare proto: RoleProto;
   levelController!: LevelController;
   bagController!: BagController;
+  equipController!: EquipController;
   constructor(readonly savedRole: SavedRole) {
     super(savedRole, RoleProtos[savedRole.index]);
     this.initRole();
@@ -34,6 +38,8 @@ export class Role extends Vita<RoleAttribute> {
   initRole() {
     this.levelController = new LevelController(this);
     this.bagController = new BagController(this);
+    this.equipController = new EquipController(this);
+    this.viewController.bindEquipController(this.equipController);
   }
 
   toJson(): SavedRole {
@@ -42,7 +48,7 @@ export class Role extends Vita<RoleAttribute> {
       exp: this.levelController.exp,
       money: 0,
       bag: this.bagController.toJson(),
-      equip: []
+      equip: this.equipController.toJson()
     };
   }
 
