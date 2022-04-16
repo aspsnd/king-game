@@ -59,13 +59,13 @@ export class StatingController extends Controller {
     })
 
     if (belonger.proto.needRest) {
-      const common = stateController.get(StateCache.common)!;
-      const { restInterval, restTime } = belonger.proto;
-      stateController.on(StateCache.common, () => {
-        if (common.headTime >= restInterval) {
-          stateController.setStateLeft(StateCache.rest, restTime);
-        }
-      })
+      // const common = stateController.get(StateCache.common)!;
+      // const { restInterval, restTime } = belonger.proto;
+      // stateController.on(StateCache.common, () => {
+      //   if (common.headTime >= restInterval) {
+      //     stateController.setStateLeft(StateCache.rest, restTime);
+      //   }
+      // })
     }
 
   }

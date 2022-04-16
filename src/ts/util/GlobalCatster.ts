@@ -13,9 +13,9 @@ document.addEventListener('keydown', e => {
     GlobalEventCaster.emit(new AnxiEvent('realkeydown', e, GlobalDowning[e.key]));
     GlobalEventCaster.emit(new AnxiEvent(`dkey_${e.key.toLowerCase()}`, e));
   }
-})
+});
 document.addEventListener('keyup', e => {
   GlobalDowning[e.key] = false;
   GlobalEventCaster.emit(new AnxiEvent('keyup', e));
   GlobalEventCaster.emit(new AnxiEvent(`ukey_${e.key.toLowerCase()}`, e));
-})
+});

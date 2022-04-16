@@ -7,9 +7,10 @@ import { Vita } from "../chain/vita/Vita";
 
 export interface FlyerOptions {
   body: Body
-  speedMode: 'const' | 'getter'
+  speedMode: 'const' | 'getter' | 'position'
   speed?: [number, number]
   speedGetter?(time: number): [number, number]
+  positionGetter?(time: number): [number, number]
 
   angleMode: 'const' | 'getter'
   angle?: number
@@ -110,6 +111,12 @@ export class Flyer extends Quark {
       Body.setVelocity(physics.box, {
         x: speed![0],
         y: speed![1]
+      });
+    } else if (options.speedMode === 'position') {
+      const position = options.positionGetter!(now);
+      Body.setPosition(physics.box, {
+        x: position[0],
+        y: position[1]
       });
     }
 

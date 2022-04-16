@@ -15,10 +15,12 @@ import { BackController } from "./controller/BackController";
 import { StepController } from "./controller/StepController";
 import { MoveStruct } from "../../../anxi/chain/Quark";
 import { PanelController } from "../../controller/panel/PanelController";
-import { OpenController } from "./controller/OpenController";
+import { OpenController, OpenType } from "./controller/OpenController";
 import { generateEquip } from "../../../data/thing/EquipProto";
 import { EquipCache } from "../../controller/equip/EquipCache";
 import { EquipProtos } from "../../../data/thing";
+import { Render } from "matter-js";
+import { StateCache } from "../../controller/state/StateCache";
 
 export class CardWorld extends World {
 
@@ -56,7 +58,7 @@ export class CardWorld extends World {
 
     if (__DEV__) {
       window.onkeydown = (e) => {
-        if (e.key !== '1') return;
+        if (e.key !== 'Home') return;
         e.preventDefault();
         if (this.running) {
           this.running = false;
@@ -75,24 +77,28 @@ export class CardWorld extends World {
     this.openController = new OpenController(this, true);
     if (isMobile) {
       this.openController.listenKeyboard();
+      // if (__DEV__) {
+      //   setTimeout(() => {
+      //     this.openController.wantToggle(OpenType.Bag);
+      //   }, 100);
+      // }
     }
 
     let dev: PhysicsWorldOptions['dev'] = undefined;
     let devCanvas: PhysicsWorldOptions['devCanvas'] = undefined;
-    if (__DEV__ && false) {
+    if (__DEV__ && true) {
       const canvas = document.createElement('canvas');
       canvas.style.position = 'absolute';
       canvas.style.width = appCanvas.offsetWidth + 'px';
       canvas.style.height = appCanvas.offsetHeight + 'px';
 
       canvas.style.left = appCanvas.offsetLeft + 'px';
-      canvas.style.top = appCanvas.offsetTop + 'px';
-      canvas.style.pointerEvents = 'none';
-
-
-      setTimeout(() => {
-        canvas.style.backgroundColor = 'rgba(0,0,0,0.0)';
+      const shadow = true;
+      canvas.style.top = (appCanvas.offsetTop + (shadow ? 0 : appCanvas.offsetHeight)) + 'px';
+      shadow && setTimeout(() => {
+        canvas.style.backgroundColor = 'transparent';
       }, 100);
+      canvas.style.pointerEvents = 'none';
 
       devCanvas = canvas;
 
@@ -101,6 +107,12 @@ export class CardWorld extends World {
         height: gameHeight
       }
       document.body.append(canvas);
+      this.on('time', () => {
+        this.physicsController.render!.bounds.min.x = this.backController.offset[0];
+        this.physicsController.render!.bounds.min.y = this.backController.offset[1];
+        this.physicsController.render!.bounds.max.x = this.backController.offset[0] + gameWidth;
+        this.physicsController.render!.bounds.max.y = this.backController.offset[1] + gameHeight;
+      })
 
     }
     this.physicsController = new PhysicsWorldController(this, {
@@ -149,19 +161,32 @@ export class CardWorld extends World {
       moveUtil.value = Math.max(box.y, Math.min(moveUtil.value, box.y + box.width));
     });
 
-    if (__DEV__ && false) {
+    if (__DEV__) {
       const weapon = generateEquip(EquipProtos[0]);
       const body = generateEquip(EquipProtos[1]);
-      setInterval(() => {
-        // console.log('getEquip');
-        role.equipController.data[weapon.type] = weapon;
-        role.equipController.data[body.type] = body;
-        setTimeout(() => {
-          // console.log('loseEquip');
-          role.equipController.data[weapon.type] = undefined;
-          role.equipController.data[body.type] = undefined;
-        }, 1000)
-      }, 2000);
+      role.equipController.data[weapon.type] = weapon;
+      role.equipController.data[body.type] = body;
+      for (let i = 0; i < 30; i++) {
+        const weapon = generateEquip(EquipProtos[Math.floor(Math.random() * 2)]);
+        role.bagController.getThing(weapon);
+      }
+
+      // @ts-ignore
+      window.test = (n = 0) => {
+        // @ts-ignore
+        window.add(100);
+        this.roles[0].on(1027);
+        this.running = false;
+        // @ts-ignore
+        window.add(n);
+      }
+      // @ts-ignore
+      window.add = (n = 6) => {
+        for (let i = 0; i < n; i++) {
+          this.roles[0].onTime(1);
+        }
+        // this.roles[0].viewController.onRender();
+      }
     }
 
   }

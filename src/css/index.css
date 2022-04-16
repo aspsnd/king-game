@@ -3,6 +3,8 @@ body{
 }
 
 #appCanvas{
-  width: 1440px;
-  height: 885px;
+  /* width: 1440px;
+  height: 885px; */
+  width: 960px;
+  height: 590px;
 }

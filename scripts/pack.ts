@@ -33,9 +33,10 @@ const packPackage = async (srcs: string[]) => {
     })
   };
   const results = await packAsync(params, {
-    width: 1024,
+    width: 2048,
     height: 1024,
-    exporter: 'Pixi' as any
+    exporter: 'Pixi' as any,
+    padding: 1
   })
   const map = new Map<string, Buffer[]>();
   for (const result of results) {
@@ -53,8 +54,8 @@ const packPackage = async (srcs: string[]) => {
     res.push(count + '');
     const json = JSON.parse(b2.toString('utf8'));
     json.meta.image = `${count}.png`;
-    writeFile(resolve(outDir, `${count}.png`), b1);
-    writeFile(resolve(outDir, `${count}.json`), JSON.stringify(json, undefined, 2));
+    await writeFile(resolve(outDir, `${count}.png`), b1);
+    await writeFile(resolve(outDir, `${count}.json`), JSON.stringify(json, undefined, 2));
   }
 
   return res;
@@ -83,13 +84,17 @@ const run = async () => {
     console.error(e)
   }
 
-  await runAsserts();
+  try {
+    await runAsserts();
+  } catch (e) {
+    console.error(e);
+  }
 
 }
 
 const runAsserts = async () => {
   const backDir = './public/resources/assets/scene/back';
-  const map = {};
+  const backMap = {};
   for (const file of await readdir(backDir)) {
     if (file.endsWith('.jpg') || file.endsWith('.png')) {
       const ext = file.split('.').pop();
@@ -97,10 +102,10 @@ const runAsserts = async () => {
       const key = relative('./public/resources', path).replace(/\\/g, '/');
       const index = ++count;
       await copyFile(path, resolve(outDir, `${index}.${ext}`));
-      map[key] = `${index}.${ext}`;
+      backMap[key] = `${index}.${ext}`;
     }
   }
-  const data2 = `export const backs: Record<string, string> = ${JSON.stringify(map, undefined, 2)};\r\n`;
+  const data2 = `export const backs: Record<string, string> = ${JSON.stringify(backMap, undefined, 2)};\r\n`;
   await appendFile(listFile, data2);
 
   const groundDir = './public/resources/assets/scene/ground';
@@ -118,6 +123,19 @@ const runAsserts = async () => {
   }
   const data3 = `export const grounds: Record<string, string> = ${JSON.stringify(groundMap, undefined, 2)};\r\n`;
   await appendFile(listFile, data3);
+
+  const monstDir = './public/resources/assets/monst';
+
+  const monstMap = {};
+
+  for (const file of await readdir(monstDir)) {
+    const files = await getImgs(resolve(monstDir, file));
+    if (files.length === 0) continue;
+    const result = await packPackage(files);
+    monstMap[file] = result;
+  }
+  const data4 = `export const monsts: Record<string, string[]> = ${JSON.stringify(monstMap, undefined, 2)};\r\n`;
+  await appendFile(listFile, data4);
 
 }
 

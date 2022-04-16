@@ -80,26 +80,30 @@ export class AlerFactory {
                         e.preventDefault();
                     }
                 }, {
-                    capture: true
+                    capture: true,
+                    passive:true
                 });
                 node.addEventListener('touchmove', e => {
                     if (e.target === node) {
                         e.preventDefault();
                     }
                 }, {
-                    capture: true
+                    capture: true,
+                    passive:true
                 });
                 (node.querySelector('.aler')! as HTMLDivElement).addEventListener('wheel', e => {
                     e.stopImmediatePropagation();
                     e.stopPropagation();
                 }, {
-                    capture: true
+                    capture: true,
+                    passive:true
                 });
                 let lastY = 0;
                 (node.querySelector('.aler')! as HTMLDivElement).addEventListener('touchstart', e => {
                     lastY = e.touches[0].pageY;
                 }, {
-                    capture: true
+                    capture: true,
+                    passive:true
                 });
                 (node.querySelector('.aler')! as HTMLDivElement).addEventListener('touchmove', e => {
                     const target = e.target as HTMLDivElement;
@@ -115,7 +119,8 @@ export class AlerFactory {
                         }
                     }
                 }, {
-                    capture: true
+                    capture: true,
+                    passive:true
                 });
                 node.className = classOption.cover!;
                 this.node = node;

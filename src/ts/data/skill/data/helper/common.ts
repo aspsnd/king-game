@@ -1,7 +1,7 @@
 import { Attack } from "../../../../core/attack/Attack";
 import { Vita } from "../../../../core/chain/vita/Vita";
-import { Flyer } from "../../../../core/flyer/Flyer";
-import { AttackProto } from "../attacks/Proto";
+import { Flyer, FlyerOptions } from "../../../../core/flyer/Flyer";
+import { AttackProto, AttackType } from "../attacks/Proto";
 
 export class CommonAttack {
 
@@ -21,25 +21,42 @@ export class CommonAttack {
 
     const liveTime = dieTime - createTime;
 
+    const flyerConfig: FlyerOptions = {
+      body: proto.getHitBody(from),
+      speedMode: 'const',
+      speed: [0, 0],
+      angleMode: 'const',
+      angle: 0,
+      affectGetter(to) {
+        return attack.generateAffect(to);
+      },
+      checker(vita) {
+        return vita.group !== from.group;
+      },
+      liveTime,
+      moilTime: 0,
+      dieAfterHit: false
+    };
+
+    switch (proto.type) {
+      case AttackType.sword: {
+        flyerConfig.speedMode = 'position';
+        flyerConfig.positionGetter = (_time: number) => {
+          return [from.x + (proto.flyerOffset[0] * from.face), from.y + proto.flyerOffset[1]];
+        }
+        break;
+      }
+      case AttackType.arrow: {
+
+        break;
+      }
+    }
+
     from.once(`time_${now + createTime}`, () => {
-      const flyer = new Flyer({
-        body: proto.getHitBody(from),
-        speedMode: 'const',
-        speed: [0, 0],
-        angleMode: 'const',
-        angle: 0,
-        affectGetter(to) {
-          return attack.generateAffect(to);
-        },
-        checker(vita) {
-          return vita.group !== from.group;
-        },
-        liveTime,
-        moilTime: 0,
-        dieAfterHit: false
-      });
+      const flyer = new Flyer(flyerConfig);
       flyer.x = from.x;
       flyer.y = from.y;
+      flyer.onTime(0);
       flyer.land(from);
     });
 

@@ -13,99 +13,35 @@ import { AttackProto, AttackType } from "./Proto";
 interface D {
   freezeUntil: number
   lastTime: number
-  lastIndex: number
 }
-
-const attack0: AttackProto = {
+const proto: AttackProto = {
   type: AttackType.sword,
-  flyerOffset: [40, -10],
-  checkTimes: [0.5, 1.0],
-  debuff: [{
-    state: StateCache.beHitBehind,
-    continue: 10
-  }],
-  getHitBody() {
-    return Bodies.rectangle(0, 0, 80,80);
-  },
-  actionData(need: number) {
-    return {
-      [BodyCache.weapon]: {
-        frames: [0, 8, 20].map(v => (v / 20 * need) | 0),
-        value: [
-          [20, 0, 185],
-          [22, 11, 280],
-          [20, 0, 185]
-        ]
-      },
-      [BodyCache.hand_r]: {
-        frames: [0, 8, 20].map(v => (v / 20 * need) | 0),
-        value: [
-          [0, -3, 15],
-          [0, -3, 45],
-          [0, -3, 15],
-        ]
-      }
-    }
-  }
-}
-
-const attack1: AttackProto = {
-  type: AttackType.sword,
-  flyerOffset: [45, 5],
-  checkTimes: [.5, 1.0],
+  flyerOffset: [22, -8],
+  checkTimes: [0.1, 0.5],
   debuff: [{
     state: StateCache.beHitBehind,
     continue: 10
   }],
   getHitBody(vita: Vita<VitaAttribute>) {
-    return Bodies.rectangle(0, 0, 100, 60);
+    return Bodies.circle(0, 0, 35);
   },
   actionData(need: number) {
     return {
       [BodyCache.weapon]: {
-        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(v => (v / 10 * need) | 0),
+        frames: [0, 6, 15].map(v => (v / 15 * need) | 0),
         value: [
-          [20, 0, 185],
-          [18, 15, 275],
-          [-4, 20, 275],
-          [-13, 12, 275],
-          [-20, 8, 275],
-          [-8, 16, 275],
-          [18, 13, 270],
-          [30, -5, 270],
-          [33, -5, 270],
-          [24, -3, 225],
-          [20, 0, 185],
-        ]
-      },
-      [BodyCache.hand_r]: {
-        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(v => (v / 10 * need) | 0),
-        value: [
-          [0, -3, 15],
-          [0, -3, 52],
-          [0, -3, 90],
-          [0, -3, 127],
-          [0, -3, 155],
-          [0, -3, 102],
-          [0, -3, 55],
-          [0, -3, 0],
-          [0, -3, 0],
-          [0, -3, 7],
-          [0, -3, 15],
+          [0, -7, 185],
+          [0, -7, 280],
+          [0, -7, 185]
         ]
       }
     }
   }
 }
-console.log(new ActionData({
-  [StateCache.attack]: attack1.actionData(60)
-}).standard[StateCache.attack]);
-
-export const Role0Attack = new SkillProto<{}, D>(0, '普通攻击-孤影剑客')
+export const Monst0Attack = new SkillProto<{}, D>(1, '普通攻击-斧头兵')
   .initData(function () {
     return {
       freezeUntil: 0,
-      lastIndex: 0,
       lastTime: -Infinity
     }
   })
@@ -118,25 +54,12 @@ export const Role0Attack = new SkillProto<{}, D>(0, '普通攻击-孤影剑客')
     const state = vita.stateController;
 
     const time = vita.time;
-
-    let index = 0;
-    if (!state.some(StateCache.jump, StateCache.jumpSec, StateCache.drop)) {
-      if (time - data.freezeUntil < 15) {
-        index = (data.lastIndex + 1) % 2;
-      }
-      // state.removeState(StateCache.go, StateCache.run);
-    }
-
-
-    const proto = [attack0, attack1][index];
-
     // 更新data，执行攻击
     const atp = vita.attribute.get('ats');
 
     const needed = Math.ceil(60 / atp);
 
     data.freezeUntil = time + needed;
-    data.lastIndex = index;
     data.lastTime = time;
 
     state.setStateLeft(StateCache.attack, needed);

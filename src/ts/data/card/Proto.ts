@@ -13,7 +13,7 @@ export interface CardData {
   boxs: Array<Rectangle>
   whenCross: () => void
   whenFirstCross: () => void
-  walls: [number, number, number][]
-  monsts: [number, number, number, number][][]
-  boss: [number, number, number, number][]
+  walls: [index: number, x: number, y: number][]
+  monsts: [index: number, x: number, y: number, wait: number, face?: -1 | 1, lastId?: number][][]
+  boss: [index: number, x: number, y: number, face?: -1 | 1][]
 }

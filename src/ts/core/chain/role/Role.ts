@@ -19,7 +19,7 @@ export const EmptySavedRole = (index: number): SavedRole => ({
 
   },
   index,
-  attr: RoleProtos[index].attr,
+  attr: { ...RoleProtos[index].attr },
   skills: [],
   talentStars: 0,
   talents: []

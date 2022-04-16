@@ -1,4 +1,3 @@
-import { Graphics } from "pixi.js";
 import { Atom } from "../../../anxi/chain/Atom";
 import { MoveStruct } from "../../../anxi/chain/Quark";
 import { SkillController } from "../../../anxi/controller/skill";

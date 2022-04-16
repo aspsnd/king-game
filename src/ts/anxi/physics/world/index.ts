@@ -13,7 +13,7 @@ export interface PhysicsWorldOptions extends Matter.IEngineDefinition {
   devCanvas?: HTMLCanvasElement,
   dev?: {
     width?: number,
-    height?: number
+    height?: number,
   }
 }
 export class PhysicsWorldController extends Controller {
@@ -41,6 +41,7 @@ export class PhysicsWorldController extends Controller {
         options: {
           width: options.dev?.width ?? 750,
           height: options.dev?.height ?? 1334,
+          hasBounds: true
         },
       });
       Matter.Render.run(this.render);

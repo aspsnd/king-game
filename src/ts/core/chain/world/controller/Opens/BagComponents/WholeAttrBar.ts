@@ -70,6 +70,6 @@ export class WholeAttrBar extends Container {
     this.bars.hpr.value = `${role.attribute.get('hpr') | 0}`;
     this.bars.mpr.value = `${role.attribute.get('mpr') | 0}`;
     this.bars.exp.value = `${role.levelController.exp | 0} / ${role.levelController.fexp}`;
-    // this.bars.money.value = role.money | 0;
+    this.bars.money.value = `${role.bagController.money | 0}`;
   }
 }

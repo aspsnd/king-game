@@ -6,9 +6,9 @@ import { EquipProto } from "../../EquipProto";
 import { QualityType, ThingType } from "../../ThingProto";
 
 export const weapon1_1: EquipProto = {
-  index: EquipCache.Weapon,
+  index: 0,
   kind: ThingType.Equip,
-  type: 0,
+  type: EquipCache.Weapon,
   props: {
     atk: [3, 5]
   },

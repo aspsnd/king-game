@@ -18,6 +18,10 @@ export const QualityType = {
   flash: 5
 } as const;
 
+export const QualityText = ['普通', '优秀', '精良', '史诗', '传说', '远古'] as const;
+
+export const QualityColor = ['#ffffff', '#00ff51', '#0051ff', '#660098', '#ff6600', '#ff00ff'] as const;
+
 
 export type QualityType = typeof QualityType[keyof typeof QualityType];
 

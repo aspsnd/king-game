@@ -1,10 +1,57 @@
-import { Graphics, PI_2, Polygon, Text } from "pixi.js";
+import { Graphics, PI_2, Polygon, Sprite, Text, Texture } from "pixi.js";
+import { getProto } from "../../../../../../data/thing";
+import { Thing } from "../../../../../../data/thing/ThingProto";
+import { directBy } from "../../../../../../util/texture";
+import { Detail } from "./Detail";
 
 export class Grid extends Graphics {
+  
+  private _thing?: Thing
+
+  set thing(v: Thing | undefined) {
+    this._thing = v;
+    if (!v) {
+      this.container.texture = Texture.EMPTY;
+      this.interactive = false;
+      this.cursor = 'auto';
+      if (this.detail) {
+        this.detail.destroy();
+        this.detail = undefined;
+      }
+    } else {
+      this.container.texture = directBy(getProto(v).disUrl);
+      this.interactive = true;
+      this.cursor = 'pointer';
+    };
+  }
+
+  get thing(): Thing | undefined {
+    return this._thing;
+  }
+
+  container = new Sprite()
+
+  detail?: Detail
   constructor() {
     super();
     this.lineStyle(1, 0xffffff)
       .drawRoundedRect(0, 0, 50, 50, 5);
+
+    this.on('pointerover', () => {
+      if (this.detail) this.detail.destroy();
+      this.detail = new Detail(this.thing!);
+      this.parent.addChild(this.detail);
+      this.detail.position.set(this.x + 50, this.y);
+    });
+    this.on('pointerout', () => {
+      if (this.detail) {
+        this.detail.destroy();
+        this.detail = undefined;
+      }
+    })
+  }
+  init() {
+    this.addChild(this.container);
   }
 }
 
@@ -29,6 +76,7 @@ export class StarGrid extends Grid {
     this.beginFill(0x00aaaa, 0.1);
     this.drawPolygon(new Star(25, 25, 6, 25));
     this.endFill();
+    this.init();
   }
 }
 
@@ -42,5 +90,6 @@ export class TextGrid extends Grid {
     text.position.set(25, 25);
     text.anchor.set(0.5, 0.5);
     this.addChild(text);
+    this.init();
   }
 }
