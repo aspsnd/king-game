@@ -11,6 +11,8 @@ export const MonstProto0: MonstProto = {
     mp: 50,
     atk: 8,
     def: 0,
+    mgc: 0,
+    mdf: 0,
     crt: 0,
     dod: 0,
     hpr: 0,

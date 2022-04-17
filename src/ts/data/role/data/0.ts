@@ -16,6 +16,8 @@ export const RoleProto0: RoleProto = {
     hp: 100,
     mp: 80,
     atk: 10,
+    mgc: 0,
+    mdf: 0,
     def: 0,
     crt: 0,
     dod: 0,
@@ -268,7 +270,7 @@ export const RoleProto0: RoleProto = {
         ]
       }
     },
-    [StateCache.beHitBehind]: {
+    [StateCache.beHitBehind.priority]: {
       [BodyCache.hand_r]: {
         value: [[0, -3, 65]]
       },

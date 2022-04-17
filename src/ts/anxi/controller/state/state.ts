@@ -8,7 +8,6 @@ export class State extends AnxiEventer {
     return this._left;
   }
   set left(v: number) {
-    if (this.composite) throw new Error('can not ser left for a composite state object!');
     let oldState = this._left > 0 || this.infinite;
     this._left = Math.max(v, 0);
     if (oldState !== (this._left > 0 || this.infinite)) {
@@ -49,6 +48,7 @@ export class State extends AnxiEventer {
       for (const item of this.items) {
         if (item.left) item.left--;
         item.time++;
+        item.emit(new AnxiEvent('time'));
         item.left > 0 || item.infinite || item.destroy();
       }
     }

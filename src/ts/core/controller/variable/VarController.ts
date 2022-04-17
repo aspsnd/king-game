@@ -52,7 +52,7 @@ export class VarController extends Controller {
 
     for (const shield of this.shields) {
       switch (shield.type) {
-        case ShieldType.physical: {
+        case ShieldType.physics: {
           let cost = Math.min(physics, shield.left);
           shield.left -= cost;
           physics -= cost;

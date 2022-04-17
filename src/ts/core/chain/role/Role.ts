@@ -40,6 +40,8 @@ export class Role extends Vita<RoleAttribute> {
     this.bagController = new BagController(this);
     this.equipController = new EquipController(this);
     this.viewController.bindEquipController(this.equipController);
+    this.physicsController.box.collisionFilter.category = 0b10000000;
+    this.physicsController.box.collisionFilter.mask = 0b00110000;
   }
 
   toJson(): SavedRole {

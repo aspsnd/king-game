@@ -5,7 +5,7 @@ import { Vita } from "../../chain/vita/Vita";
 
 export const ShieldType = {
   common: 0,
-  physical: 1,
+  physics: 1,
   magic: 2
 } as const;
 
@@ -14,7 +14,7 @@ export type ShieldType = typeof ShieldType[keyof typeof ShieldType];
 
 export class Shield extends AnxiEventer<'lost'>{
   private _left: number;
-  constructor(readonly value: number, readonly type: ShieldType = ShieldType.common, readonly vita: Vita<VitaAttribute>) {
+  constructor(readonly value: number, readonly type: ShieldType = ShieldType.common, readonly from: Vita<VitaAttribute>) {
     super();
     this._left = value;
   }

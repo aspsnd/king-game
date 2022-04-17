@@ -1,6 +1,9 @@
-export class StateItem<T = any>  {
+import { AnxiEventer } from "../../../aixi/eventer/Eventer";
+
+export class StateItem<T = any> extends AnxiEventer {
   time = 0
   constructor(public left = 0, public infinite = false, public data?: T) {
+    super();
     if (left < 1 && !infinite) throw new Error('The stateItem is not valid!');
   }
 

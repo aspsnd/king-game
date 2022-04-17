@@ -37,14 +37,17 @@ export const StateCache = {
   // 禁止飞行
   banhover: 500,
   // 普通攻击
-  attack: -201,
+  attack: -98,
   // 中毒
   poison: {
     priority: -402,
     composite: true
   },
   // 被击退
-  beHitBehind: 501,
+  beHitBehind: {
+    priority: 501,
+    composite: true
+  },
   //眩晕
   dizzy: {
     priority: 600,

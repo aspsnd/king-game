@@ -18,7 +18,7 @@ export class InstructController extends Controller {
     this.maxJumpTimes = belonger.proto.maxJumpTimes;
     const { stateController } = belonger;
     this.registerLivingHandler(Instructs.wantgo, (e: AnxiEvent) => {
-      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority, StateCache.go)) return;
+      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind.priority, StateCache.dizzy.priority, StateCache.go)) return;
       if (e.data[0] === true) {
         stateController.setStateInfinite(StateCache.go, true);
       } else {
@@ -26,7 +26,8 @@ export class InstructController extends Controller {
       }
     });
     this.registerLivingHandler(Instructs.wantleft, () => {
-      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority)) return;
+      belonger.statingController.continueLefting = belonger.time;
+      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind.priority, StateCache.dizzy.priority)) return;
       if (stateController.some(StateCache.go) && belonger.face == -1) return;
       if (belonger.canRun() && belonger.face == -1) {
         stateController.setStateInfinite(StateCache.go, false);
@@ -38,7 +39,8 @@ export class InstructController extends Controller {
       }
     })
     this.registerLivingHandler(Instructs.wantright, () => {
-      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind, StateCache.dizzy.priority)) return;
+      belonger.statingController.continueRighting = belonger.time;
+      if (stateController.some(StateCache.hard.priority, StateCache.beHitBehind.priority, StateCache.dizzy.priority)) return;
       if (stateController.some(StateCache.go) && belonger.face == 1) return;
       if (belonger.canRun() && belonger.face == 1) {
         stateController.setStateInfinite(StateCache.go, false);
@@ -51,19 +53,21 @@ export class InstructController extends Controller {
     });
 
     this.registerLivingHandler(Instructs.cancelleft, () => {
+      belonger.statingController.continueLefting = -1;
       if (belonger.face == 1) return;
       stateController.setStateInfinite(StateCache.go, false);
       stateController.setStateInfinite(StateCache.run, false);
     });
 
     this.registerLivingHandler(Instructs.cancelright, () => {
+      belonger.statingController.continueRighting = -1;
       if (belonger.face == -1) return;
       stateController.setStateInfinite(StateCache.go, false);
       stateController.setStateInfinite(StateCache.run, false);
     });
 
     this.registerLivingHandler(Instructs.wantjump, () => {
-      if (stateController.some(StateCache.hard.priority, StateCache.attack, StateCache.beHitBehind, StateCache.dizzy.priority, StateCache.linkGround.priority)) return;
+      if (stateController.some(StateCache.hard.priority, StateCache.attack, StateCache.beHitBehind.priority, StateCache.dizzy.priority, StateCache.linkGround.priority)) return;
       if (this.maxJumpTimes < 1 || this.jumpTimes == this.maxJumpTimes) return;
 
       this.jumpTimes++;

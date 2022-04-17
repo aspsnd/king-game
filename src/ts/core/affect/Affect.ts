@@ -1,4 +1,5 @@
 import { AnxiEvent } from "../../aixi/eventer/Event";
+import { StateItem } from "../../anxi/controller/state/item";
 import { Vita } from "../chain/vita/Vita";
 
 export class Affect {
@@ -12,7 +13,7 @@ export class Affect {
   shield = {
     physics: 0,
     magic: 0,
-    real: 0
+    common: 0
   }
 
   recover = {
@@ -34,9 +35,16 @@ export class Affect {
 
   finalHurt = 0
 
+  buffs: Array<{
+    state: number,
+    continue: number,
+    itemCreater?(affect: Affect): StateItem
+  }> = []
+
   debuffs: Array<{
     state: number,
-    continue: number
+    continue: number,
+    itemCreater?(affect: Affect): StateItem
   }> = []
 
   positive = false
@@ -53,11 +61,14 @@ export class Affect {
 
   emit() {
 
-    // 预添加额外效果
+    // 预添加额外效果，给技能注入
     this.from.emit(new AnxiEvent('preAffect', this));
 
-    // 计算特殊闪避、减免
-    this.to.emit(new AnxiEvent('preBeAffect', this));
+    // 计算特殊闪避、减免，给技能注入
+    this.to.emit(new AnxiEvent('preBeAffect0', this));
+
+    // 计算通用闪避、减伤，给Vita注入
+    this.to.emit(new AnxiEvent('preBeAffect1', this));
 
     if (this.hurt.physics < this.reduce.physics) {
       this.reduce.physics = this.hurt.physics;
@@ -68,7 +79,7 @@ export class Affect {
     if (this.hurt.real < this.reduce.real) {
       this.reduce.real = this.hurt.real;
     }
-    
+
     /**
      * 应掉血量
      */

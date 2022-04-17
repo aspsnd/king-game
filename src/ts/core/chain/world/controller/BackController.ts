@@ -79,9 +79,11 @@ export class BackController extends Controller {
     this.offset[0] = newX;
     this.offset[1] = newY;
 
-    this.belonger.get(WorldViewController).container.x = -newX;
-    this.belonger.get(WorldViewController).container.y = -newY;
-    
+    this.belonger.get(WorldViewController).childContainer.x = -newX;
+    this.belonger.get(WorldViewController).childContainer.y = -newY;
+    this.belonger.wallContainer.x = -newX;
+    this.belonger.wallContainer.y = -newY;
+
     let i = 0;
     for (const sprite of this.backs) {
 

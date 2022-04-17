@@ -7,6 +7,7 @@ import { MatrixViewer } from "../../../anxi/controller/view";
 import { PhysicsController } from "../../../anxi/physics/atom";
 import { SkillProtos } from "../../../data/skill";
 import { InstructController } from "../../controller/instruct/InstructController";
+import { ReactionController } from "../../controller/reaction/ReactionController";
 import { StateCache } from "../../controller/state/StateCache";
 import { StatingController } from "../../controller/stating/StatingController";
 import { VarController } from "../../controller/variable/VarController";
@@ -43,6 +44,7 @@ export class Vita<B extends VitaAttribute> extends Atom<B>{
   instructController!: InstructController;
   physicsController!: PhysicsController<true>;
   statingController!: StatingController;
+  reactionController!: ReactionController;
   var!: VarController;
 
   currentGround?: Wall
@@ -87,9 +89,15 @@ export class Vita<B extends VitaAttribute> extends Atom<B>{
       isBody: true,
       body: this.proto.hitGraph(this),
     });
+
+    /**
+     *  0b[role][monst][wall][skill]0000
+     */
     this.physicsController.box.collisionFilter.category = 0b10000000;
     this.physicsController.box.collisionFilter.mask = 0b00110000;
     this.physicsController.box.collisionFilter.group = -1;
+
+    this.reactionController = new ReactionController(this);
 
   }
 

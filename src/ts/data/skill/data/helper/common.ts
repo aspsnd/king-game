@@ -21,8 +21,14 @@ export class CommonAttack {
 
     const liveTime = dieTime - createTime;
 
+    const body = proto.getHitBody(from);
+
+    body.collisionFilter.group = -2;
+    body.collisionFilter.category = 0b00010000;
+    body.collisionFilter.mask = 0b11000000;
+
     const flyerConfig: FlyerOptions = {
-      body: proto.getHitBody(from),
+      body,
       speedMode: 'const',
       speed: [0, 0],
       angleMode: 'const',

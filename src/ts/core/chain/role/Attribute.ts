@@ -1,6 +1,6 @@
-import { AtomAttrBlock } from "../../../anxi/chain/Atom";
+import { VitaAttribute } from "../vita/Attribute";
 
-export interface RoleAttribute extends AtomAttrBlock {
+export interface RoleAttribute extends VitaAttribute {
   hp: number
   mp: number
   atk: number

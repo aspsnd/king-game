@@ -19,11 +19,16 @@ const proto: AttackProto = {
   flyerOffset: [22, -8],
   checkTimes: [0.1, 0.5],
   debuff: [{
-    state: StateCache.beHitBehind,
+    state: StateCache.beHitBehind.priority,
     continue: 10
   }],
   getHitBody(vita: Vita<VitaAttribute>) {
-    return Bodies.circle(0, 0, 35);
+    return Bodies.circle(0, 0, 35, {
+      isSensor: true,
+      collisionFilter: {
+        group: 5
+      }
+    });
   },
   actionData(need: number) {
     return {
@@ -89,7 +94,7 @@ export const Monst0Attack = new SkillProto<{}, D>(1, '普通攻击-斧头兵')
     if (vita.dead) return false;
     if (vita.time < data.freezeUntil) return false;
     if (vita.stateController.some(
-      StateCache.beHitBehind,
+      StateCache.beHitBehind.priority,
       StateCache.dizzy.priority,
       StateCache.hard.priority,
       StateCache.attack

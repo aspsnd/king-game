@@ -21,7 +21,7 @@ const attack0: AttackProto = {
   flyerOffset: [40, -10],
   checkTimes: [0.5, 1.0],
   debuff: [{
-    state: StateCache.beHitBehind,
+    state: StateCache.beHitBehind.priority,
     continue: 10
   }],
   getHitBody() {
@@ -54,7 +54,7 @@ const attack1: AttackProto = {
   flyerOffset: [45, 5],
   checkTimes: [.5, 1.0],
   debuff: [{
-    state: StateCache.beHitBehind,
+    state: StateCache.beHitBehind.priority,
     continue: 10
   }],
   getHitBody(vita: Vita<VitaAttribute>) {
@@ -97,9 +97,6 @@ const attack1: AttackProto = {
     }
   }
 }
-console.log(new ActionData({
-  [StateCache.attack]: attack1.actionData(60)
-}).standard[StateCache.attack]);
 
 export const Role0Attack = new SkillProto<{}, D>(0, '普通攻击-孤影剑客')
   .initData(function () {
@@ -166,7 +163,7 @@ export const Role0Attack = new SkillProto<{}, D>(0, '普通攻击-孤影剑客')
     if (vita.dead) return false;
     if (vita.time < data.freezeUntil) return false;
     if (vita.stateController.some(
-      StateCache.beHitBehind,
+      StateCache.beHitBehind.priority,
       StateCache.dizzy.priority,
       StateCache.hard.priority,
       StateCache.attack
