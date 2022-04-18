@@ -1,7 +1,7 @@
 import { Quark } from "../../chain/Quark";
 import { Matrix, Sprite, Texture } from "pixi.js";
 import { getCurrent } from "./util";
-import { ActionStruct, StandardActionStruct, ActionData } from "./action";
+import { ActionStruct, StandardActionStruct, ActionData, StandardActionValue } from "./action";
 import { StateController } from "../state";
 import { ViewController } from "../base-view/view";
 import { EquipController } from "../../../core/controller/equip/EquipController";
@@ -113,9 +113,17 @@ export class MatrixViewer extends ViewController {
     }
     for (const bodyIndex in this.bodys) {
       let sprite = this.bodys[bodyIndex];
+      const useInserted = !!this.insertedAction?.[bodyIndex];
       let action = this.insertedAction?.[bodyIndex] || this.baseAction[stateIndex]?.[bodyIndex] || this.baseAction[this.defaultStateIndex][bodyIndex];
       if (!action) continue;
-      const current = getCurrent(action, this.insertedAction?.[bodyIndex] ? this.belonger.time - this.insertTime : time);
+      let current: StandardActionValue;
+      if (action.frameSelector) {
+        const belonger = this.belonger;
+        const stateController = belonger.get(StateController);
+        current = action.value[action.frameSelector(useInserted ? this.belonger.time - this.insertTime : time, stateController, belonger)];
+      } else {
+        current = getCurrent(action, this.insertedAction?.[bodyIndex] ? this.belonger.time - this.insertTime : time);
+      }
       let result = current instanceof Function ? current(time, this.belonger!.get(StateController), this.belonger) : current;
       sprite.transform.setFromMatrix(result);
     }

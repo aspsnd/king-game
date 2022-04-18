@@ -21,8 +21,9 @@ export type StandardActionValue = Matrix | CaculatorActionValue;
 */
 export type Action = {
   length?: number,
-
   frames?: number[]
+  // select 1 frame to force this frame to render!
+  frameSelector?(time: number, state: StateController, quark: Quark): number
   value: ActionValue[]
 }
 export type ActionStruct = {
@@ -37,6 +38,7 @@ export type ActionStruct = {
 }
 export type StandardAction = {
   length: number,
+  frameSelector?(time: number, state: StateController, quark: Quark): number
   value: StandardActionValue[]
 }
 export type StandardActionStruct = {

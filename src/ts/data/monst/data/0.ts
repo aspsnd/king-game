@@ -30,6 +30,7 @@ export const MonstProto0: MonstProto = {
   talents: [],
   talentStars: 0,
   height: 30,
+  displayHeight: 100,
   defaultBody: {
     [BodyCache.body]: {
       texture: 'assets/monst/0/2.png',
@@ -56,6 +57,36 @@ export const MonstProto0: MonstProto = {
         ]
       }
     },
+    [StateCache.beHitBehind.priority]: {
+      [BodyCache.weapon]: {
+        value: [[0, -7, 155]]
+      },
+      [BodyCache.body]: {
+        value: [[2, 0, -20]]
+      }
+    },
+    [StateCache.dead]: {
+      [BodyCache.body]: {
+        frames: [0, 20],
+        frameSelector(time: number) {
+          return Math.min(time, 19);
+        },
+        value: [
+          [2, 0],
+          [2, 5, 90]
+        ]
+      },
+      [BodyCache.weapon]: {
+        frames: [0, 20],
+        frameSelector(time: number) {
+          return Math.min(time, 19);
+        },
+        value: [
+          [0, -7, 185],
+          [-10, 5, 75]
+        ]
+      }
+    }
   },
   hitGraph() {
     return Bodies.circle(0, 0, 15, {

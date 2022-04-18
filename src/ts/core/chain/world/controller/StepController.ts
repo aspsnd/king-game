@@ -56,7 +56,7 @@ export class StepController extends Controller {
             await loadResourceOfMonst(num);
             console.log(`Dev::loaded resources of monst[${num}]`);
             const monst = new Monst(MonstProtos[num]);
-            monst.x = 500 + belonger.backController.offset[0];
+            monst.x = 630 + belonger.backController.offset[0];
             monst.y = 200 + belonger.backController.offset[1];
             monst.land(belonger);
 

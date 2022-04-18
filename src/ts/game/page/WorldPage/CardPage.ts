@@ -16,7 +16,9 @@ export class CardPage extends Page {
     const world = this.cardWorld = new CardWorld(this.card, this.game.worldPage.record);
     const renderer = world.get(WorldViewController);
     this.addChild(renderer.container);
+    let index = 0;
     CommonClock.onTime(() => {
+      // if (index++ % 10 > 0) return;
       world.onTime(1);
       return world._destroyed;
     });

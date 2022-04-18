@@ -8,37 +8,49 @@ export class SkillController extends Controller {
   skills: Skill[] = []
   skillMap = new Map<number, Skill>()
 
-  add(skill: Skill) {
+  add(skill: Skill, index = -1) {
     this.skills.push(skill);
+    this.skillIndexs[index] = skill.index;
     this.skillMap.set(skill.index, skill);
-    skill.link(this.belonger!);
-    skill.init();
+    for (const Construct of skill.proto.extraControllers) {
+      new Construct(this.belonger);
+    }
+    skill.link(this.belonger);
     for (const [k, { rely, caculator, annoy }] of Object.entries(skill.proto.initedAttrs)) {
-      const attr = this.belonger!.get(AttributeController).getAttr(k);
+      const attr = this.belonger.get(AttributeController).getAttr(k);
       attr.rely(...rely);
       annoy ? attr.addAnnoyCaculator(caculator) : attr.addCommonCaculator(caculator);
     }
-    this.belonger!.on(new AnxiEvent('addskill', skill));
+    skill.init();
+    this.belonger.get(AttributeController).needCompute = true;
+    this.belonger.on(new AnxiEvent('addskill', skill));
   }
   release(skill: Skill) {
     this.skills.splice(this.skills.indexOf(skill), 1);
     this.skillMap.delete(skill.index);
-    skill.remove();
     for (const [k, { rely, caculator, annoy }] of Object.entries(skill.proto.initedAttrs)) {
       const attr = this.belonger!.get(AttributeController).getAttr(k);
       attr.removeRely(...rely);
       attr.removeCaculator(caculator, annoy);
     }
+    skill.remove();
+    this.belonger.get(AttributeController).needCompute = true;
     this.belonger!.on(new AnxiEvent('removeskill', skill));
   }
 
-  init() {
-    this.belonger!.on('wantskill', e => {
-      /* TODO */
-      const skill = this.skillMap.get(this.skillIndexs[e.data[0]]);
-      if (!skill) return;
-      skill.execute();
-    })
+  wantSkill(index: number) {
+    const skill = this.skillMap.get(this.skillIndexs[index]);
+    if (!skill) return;
+    if (!skill.proto._active) return;
+    if (!skill.canExecute()) return;
+    skill.executing = true;
+    skill.execute();
+  }
+  wantCancel(index: number) {
+    const skill = this.skillMap.get(this.skillIndexs[index]);
+    if (!skill) return;
+    if (!skill.executing) return;
+    skill.cancel();
   }
 
 }

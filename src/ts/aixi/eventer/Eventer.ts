@@ -96,8 +96,10 @@ export class AnxiEventer<EventName extends BEN = BEN> {
     }
   }
 
-  once(name: EventName, handler: AnxiPlainHandler<EventName>, always = false) {
-    return this.addEventListener(name, e => handler(e) || true, always);
+  once(name: EventName, handler: AnxiPlainHandler<EventName>): AnxiPlainListener<EventName>
+  once(name: BEN, handler: AnxiPlainHandler<EventName>): AnxiPlainListener<EventName>
+  once(name: EventName | BEN, handler: AnxiPlainHandler<EventName>, always = false) {
+    return this.addEventListener(name as EventName, e => handler(e) || true, always);
   }
   onceAsync(name: EventName, handler: AsyncAnxiHandler<EventName>, always = false) {
     return this.addAsyncListener(name, async e => await (handler(e) || true), always);

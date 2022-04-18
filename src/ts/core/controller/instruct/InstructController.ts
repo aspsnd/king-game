@@ -109,7 +109,15 @@ export class InstructController extends Controller {
     const attackSkill = belonger.skillController!.skillMap.get(belonger.proto.attack)!;
     this.registerLivingHandler(Instructs.wantattack, () => {
       if (attackSkill.canExecute()) attackSkill.execute();
-    })
+    });
+
+    const skillController = belonger.skillController;
+    this.registerLivingHandler(Instructs.wantskill, e => {
+      skillController.wantSkill(e.data[0]);
+    });
+    this.registerLivingHandler(Instructs.cancelskill, e => {
+      skillController.wantCancel(e.data[0]);
+    });
 
   }
   registerLivingHandler(name: BEN, handler: AnxiPlainHandler<BEN>) {

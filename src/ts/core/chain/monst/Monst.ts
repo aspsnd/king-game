@@ -1,6 +1,7 @@
 import { MonstProtos } from "../../../data/monst";
 import { VitaAttribute } from "../vita/Attribute";
 import { Vita } from "../vita/Vita";
+import { HpBarController } from "./controller/HpBarController";
 import { MonstProto } from "./Proto";
 import { SavedMonst } from "./SavedMonst";
 
@@ -28,6 +29,9 @@ export class Monst extends Vita<VitaAttribute>{
 
     this.physicsController.box.collisionFilter.category = 0b01000000;
     this.physicsController.box.collisionFilter.mask = 0b00110000;
+
+    new HpBarController(this);
+
   }
 
 }

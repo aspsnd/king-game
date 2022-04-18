@@ -2,6 +2,7 @@ import { AttributeCaculator } from "../attribute/attribute";
 import { AnxiEvent } from "../../../aixi/eventer/Event";
 import { Skill } from "./skill";
 import { Quark } from "../../chain/Quark";
+import { Controller } from "../controller";
 
 export interface HandlerGetter<D, T> {
   (quark: Quark, skill: Skill<D, T>): (e: AnxiEvent) => void
@@ -80,6 +81,12 @@ export class SkillProto<T extends {} = { intro: string }, D extends {} = {}>{
   datar: (this: Skill<D, T>) => D = () => ({} as D)
   initData(datar: (this: Skill<D, T>) => D) {
     this.datar = datar;
+    return this;
+  }
+
+  extraControllers: (new (quark: Quark) => Controller)[] = []
+  useExtraController(construct: new (quark: Quark) => Controller) {
+    this.extraControllers.push(construct);
     return this;
   }
 

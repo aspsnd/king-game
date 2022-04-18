@@ -22,13 +22,8 @@ const proto: AttackProto = {
     state: StateCache.beHitBehind.priority,
     continue: 10
   }],
-  getHitBody(vita: Vita<VitaAttribute>) {
-    return Bodies.circle(0, 0, 35, {
-      isSensor: true,
-      collisionFilter: {
-        group: 5
-      }
-    });
+  getHitBody() {
+    return Bodies.circle(0, 0, 35);
   },
   actionData(need: number) {
     return {

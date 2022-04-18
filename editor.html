@@ -7,18 +7,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>判若莱宇宙-动画编辑器</title>
   <style>
-    body{
+    body {
+      position: relative;
       margin: 0;
     }
-    canvas{
+
+    canvas {
       width: 960px;
       height: 590px;
+    }
+
+    #timeInput {
+      position: absolute;
+      top: 590px;
+      height: 2em;
+      font-size: 3vw;
+      left: 0;
     }
   </style>
 </head>
 
 <body>
   <canvas id="appCanvas"></canvas>
+  <input type="number" id="timeInput" value="0">
   <script type="module" src="/src/editor/index.ts"></script>
 </body>
 

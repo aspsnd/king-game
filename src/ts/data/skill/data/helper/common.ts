@@ -63,7 +63,7 @@ export class CommonAttack {
       flyer.x = from.x;
       flyer.y = from.y;
       flyer.onTime(0);
-      flyer.land(from);
+      flyer.land(from.world!);
     });
 
 

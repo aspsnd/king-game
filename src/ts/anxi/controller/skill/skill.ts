@@ -19,6 +19,7 @@ export class Skill<D extends Partial<{ [key: string]: any }> = {}, T extends {} 
   inited = false
   listeners: AnxiPlainListener<BEN>[] = []
   removed = false
+  executing = false
 
   constructor(public proto: SkillProto<T, D>) {
     super();

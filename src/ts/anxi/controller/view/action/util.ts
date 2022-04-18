@@ -38,6 +38,7 @@ export function standardize(struct: ActionStruct): StandardActionStruct {
       }
       v1ed[comtIndex] = {
         length: len,
+        frameSelector: v2.frameSelector,
         value: fs
       };
     }

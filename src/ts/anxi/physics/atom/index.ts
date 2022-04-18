@@ -29,6 +29,9 @@ export class PhysicsController<T extends boolean> extends Controller<Quark, Phys
   }
   init() {
     super.init();
+    if (this.belonger.world) {
+      Matter.Composite.add(this.belonger.world!.get(PhysicsWorldController).engine.world!, this.box);
+    }
     this.belonger!.on('getworld', () => {
       this.belonger && Matter.Composite.add(this.belonger.world!.get(PhysicsWorldController).engine.world!, this.box);
     });

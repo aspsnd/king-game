@@ -12,6 +12,8 @@ import { WorldPage } from "./page/WorldPage";
 
 export class Game extends AnxiEventer {
 
+  static instance: Game;
+
   preloadPage = new PreloadPage(this);
 
   loginPage = new LoginPage(this);
@@ -28,6 +30,7 @@ export class Game extends AnxiEventer {
 
   constructor(readonly app: Application) {
     super();
+    Game.instance = this;
     this.app.stage.addChild(this.preloadPage, this.loginPage, this.mainPage, this.modePage, this.selectPage, this.worldPage);
     this.currentPage.visible = true;
     this.currentPage.__inited__ || this.currentPage.initSelf();

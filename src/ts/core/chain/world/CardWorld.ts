@@ -13,7 +13,7 @@ import { WallProto } from "../wall/Proto";
 import { Wall } from "../wall/Wall";
 import { BackController } from "./controller/BackController";
 import { StepController } from "./controller/StepController";
-import { MoveStruct } from "../../../anxi/chain/Quark";
+import { MoveStruct, Quark } from "../../../anxi/chain/Quark";
 import { PanelController } from "../../controller/panel/PanelController";
 import { OpenController, OpenType } from "./controller/OpenController";
 import { generateEquip } from "../../../data/thing/EquipProto";
@@ -21,6 +21,12 @@ import { EquipCache } from "../../controller/equip/EquipCache";
 import { EquipProtos } from "../../../data/thing";
 import { Render } from "matter-js";
 import { StateCache } from "../../controller/state/StateCache";
+import { Skill } from "../../../anxi/controller/skill/skill";
+import { SkillRole0_0 } from "../../../data/skill/data/skills/role0_0";
+import { SkillRole0_1 } from "../../../data/skill/data/skills/role0_1";
+import { Vita } from "../vita/Vita";
+import { VitaAttribute } from "../vita/Attribute";
+import { SkillRole0_2 } from "../../../data/skill/data/skills/role0_2";
 
 export class CardWorld extends World {
 
@@ -50,6 +56,7 @@ export class CardWorld extends World {
       this.guiContainer,
       this.toolContainer
     )
+    this.initChildren();
     this.initController();
 
     cardData.walls.map(([index, x, y]) => this.initWall(WallProtos[index], x, y));
@@ -68,6 +75,29 @@ export class CardWorld extends World {
       }
     }
 
+  }
+
+  vitas = new Set<Vita<VitaAttribute>>()
+
+  walls = new Set<Wall>();
+
+  initChildren() {
+    this.on('getchild', e => {
+      const quark = e.data[0] as Quark;
+      if (quark instanceof Vita) {
+        this.vitas.add(quark);
+      } else if (quark instanceof Wall) {
+        this.walls.add(quark);
+      }
+    })
+    this.on('losechild', e => {
+      const quark = e.data[0] as Quark;
+      if (quark instanceof Vita) {
+        this.vitas.delete(quark);
+      } else if (quark instanceof Wall) {
+        this.walls.delete(quark);
+      }
+    })
   }
 
   initController() {
@@ -171,22 +201,10 @@ export class CardWorld extends World {
         role.bagController.getThing(weapon);
       }
 
-      // @ts-ignore
-      window.test = (n = 0) => {
-        // @ts-ignore
-        window.add(100);
-        this.roles[0].on(1027);
-        this.running = false;
-        // @ts-ignore
-        window.add(n);
-      }
-      // @ts-ignore
-      window.add = (n = 6) => {
-        for (let i = 0; i < n; i++) {
-          this.roles[0].onTime(1);
-        }
-        // this.roles[0].viewController.onRender();
-      }
+      role.skillController.add(new Skill(SkillRole0_0), 0);
+      role.skillController.add(new Skill(SkillRole0_1), 1);
+      role.skillController.add(new Skill(SkillRole0_2), 2);
+      role.levelController.getExp(100000);
     }
 
   }

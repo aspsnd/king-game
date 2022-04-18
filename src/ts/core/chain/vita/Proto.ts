@@ -30,6 +30,7 @@ export interface VitaProto {
   talents: number[]
   talentStars: number
   height: number
+  displayHeight?: number
   defaultBody: BaseBodyStruct
   actions: ActionData | ActionStruct
   hitGraph(vita: Vita<any>): Body

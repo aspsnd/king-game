@@ -4,6 +4,7 @@ import { ActionData } from "../../../anxi/controller/view/action";
 import { StateCache } from "../../../core/controller/state/StateCache";
 import { BodyCache } from "../../../core/equip/BodyCache";
 import { CommonDropSpeed, CommonJumpSpeed } from "../../../core/chain/vita/Proto";
+import { Matrix } from "pixi.js";
 
 export const RoleProto0: RoleProto = {
   index: 0,
@@ -66,7 +67,7 @@ export const RoleProto0: RoleProto = {
   }],
   talents: [],
   talentStars: 0,
-  height: 0,
+  height: 80,
   fexpGetter: function (level: number): number {
     return Math.round(25 + 25 * level);
   },
@@ -204,84 +205,147 @@ export const RoleProto0: RoleProto = {
       [BodyCache.leg_l]: {
         frames: [0, 10, 55, 100, 110],
         value: [
-          [-5, 28, 20],
-          [-5, 28, 10],
-          [-5, 28, 0],
-          [-5, 28, 10],
-          [-5, 28, 20],
+          [-2, 28, 30],
+          [-8, 28, 10],
+          [-8, 28, 0],
+          [-8, 28, 10],
+          [-2, 28, 30],
         ]
       },
       [BodyCache.body]: {
         frames: [0, 10, 55, 100, 110],
         value: [
-          [-4, 11],
+          [-1, 11],
           [-7, 11],
           [-10, 11],
           [-7, 11],
-          [-4, 11],
+          [-1, 11],
         ]
       },
       [BodyCache.leg_r]: {
         frames: [0, 10, 55, 100, 110],
         value: [
-          [0, 28, -40],
+          [3, 28, -30],
           [-3, 28, -50],
           [-5, 28, -60],
           [-3, 28, -50],
-          [0, 28, -40],
+          [3, 28, -30],
         ]
       },
       [BodyCache.hand_l]: {
         frames: [0, 10, 55, 100, 110],
         value: [
-          [-3, -5, 105],
+          [0, -5, 105],
           [-6, -5, 105],
           [-9, -5, 105],
           [-6, -5, 105],
-          [-3, -5, 105],
+          [0, -5, 105],
         ]
       },
       [BodyCache.hand_r]: {
         frames: [0, 10, 55, 100, 110],
         value: [
-          [-4, -3, 19],
+          [0, -3, 15],
           [-7, -3, 20],
           [-10, -3, 21],
           [-7, -3, 20],
-          [-4, -3, 19],
+          [0, -3, 15],
         ]
       },
       [BodyCache.weapon]: {
-        frames: [0, 100, 110],
+        frames: [0, 10, 100, 110],
         value: [
-          [19, 0, 185 + 12 * 1],
-          [10, 5, 185 + 12 * 130],
-          [10, 5, 185 + 12 * 130],
+          [20, 5, 185 + 12 * 0],
+          [14, 5, 185 + 12 * 11],
+          [14, 5, 185 + 12 * 111],
+          [20, 5, 185 + 12 * 120],
         ]
       },
       [BodyCache.head]: {
         frames: [0, 10, 55, 100, 110],
         value: [
-          [-1, -20],
+          [2, -20],
           [-4, -19],
           [-6, -19],
           [-4, -19],
-          [-1, -20],
+          [2, -20],
         ]
       }
     },
     [StateCache.beHitBehind.priority]: {
-      [BodyCache.hand_r]: {
-        value: [[0, -3, 65]]
-      },
-      [BodyCache.weapon]: {
-        value: [[11, 20, -60]]
-      },
-      [BodyCache.head]: {
-        value: [[2, -20, -10]]
+      [BodyCache.leg_l]: {
+        value: [[-5, 28, -8]]
       },
       [BodyCache.leg_r]: {
-        value: [[3, 28, -15]]
+        value: [[0, 28, -35]]
+      },
+      [BodyCache.body]: {
+        value: [[-6, 11, -5]]
+      },
+      [BodyCache.hand_r]: {
+        value: [[-5, 0, 65]]
+      },
+      [BodyCache.hand_l]: {
+        value: [[-5, -2, 105]]
+      },
+      [BodyCache.weapon]: {
+        value: [[4, 16, -160]]
+      },
+      [BodyCache.head]: {
+        value: [[-2, -18, 0]]
+      }
+    },
+    [StateCache.dead]: {
+      [BodyCache.body]: {
+        frames: [0, 30],
+        frameSelector(time: number) {
+          return Math.min(time, 29);
+        },
+        value: [
+          [-1, 11, 0],
+          [8, 11, 30],
+        ]
+      },
+      [BodyCache.head]: {
+        frames: [0, 30],
+        frameSelector(time: number) {
+          return Math.min(time, 29);
+        },
+        value: [
+          [2, -20],
+          [28, -12, 30],
+        ]
+      },
+      [BodyCache.hand_l]: {
+        frames: [0, 30],
+        frameSelector(time: number) {
+          return Math.min(time, 29);
+        },
+        value: [
+          [0, -5, 105],
+          [20, -2, 90]
+        ]
+      },
+      [BodyCache.hand_r]: {
+        frames: [0, 30],
+        frameSelector(time: number) {
+          return Math.min(time, 29);
+        },
+        value: [
+          [0, -3, 15],
+          [20, 0, 0]
+        ]
+      },
+      [BodyCache.weapon]: {
+        frames: [0, 15, 30],
+        frameSelector(time: number) {
+          return Math.min(time, 29);
+        },
+        value: [
+          [20, 0, 185],
+          [28, -150, 452],
+          [36, 0, 720]
+        ]
       }
     }
   }),
