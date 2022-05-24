@@ -15,9 +15,10 @@ export class ParticleViewer extends ViewController {
   }
   readonly emitter: Emitter
   constructor(public quark: Quark, config: ParticleViewerOptions) {
-    super(quark);
+    super(quark, true);
     this.emitter = new Emitter(this.container, config);
     this.emitter.emit = true;
+    this.init();
   }
   private _lastTime = 0
   onRender(_: number): void {

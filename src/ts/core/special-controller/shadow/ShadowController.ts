@@ -1,3 +1,4 @@
+import { Quark } from "../../../anxi/chain/Quark";
 import { Controller } from "../../../anxi/controller/controller";
 import { VitaAttribute } from "../../chain/vita/Attribute";
 import { Vita } from "../../chain/vita/Vita";
@@ -11,6 +12,10 @@ export class ShadowController extends Controller {
   // 残影消失时爆炸
   endBoom = false
 
+  constructor(belonger: Quark) {
+    super(belonger);
+  }
+
   shadows: Shadow[] = []
   onTime(_delta: number): void {
     super.onTime(_delta);
@@ -19,6 +24,8 @@ export class ShadowController extends Controller {
       if (shadow.time >= this.continueTime) {
         if (this.endBoom) {
           shadow.boom();
+        } else {
+          shadow.destroy();
         }
       }
     }

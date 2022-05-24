@@ -1,5 +1,5 @@
 import { Bodies } from "matter-js";
-import { MonstProto } from "../../../core/chain/monst/Proto";
+import type { MonstProto } from "../../../core/chain/monst/Proto";
 import { CommonDropSpeed, CommonJumpSpeed } from "../../../core/chain/vita/Proto";
 import { StateCache } from "../../../core/controller/state/StateCache";
 import { BodyCache } from "../../../core/equip/BodyCache";

@@ -1,9 +1,9 @@
 import { MonstProtos } from "../../../data/monst";
-import { VitaAttribute } from "../vita/Attribute";
+import type { VitaAttribute } from "../vita/Attribute";
 import { Vita } from "../vita/Vita";
 import { HpBarController } from "./controller/HpBarController";
-import { MonstProto } from "./Proto";
-import { SavedMonst } from "./SavedMonst";
+import type { MonstProto } from "./Proto";
+import type { SavedMonst } from "./SavedMonst";
 
 export const EmptySavedMonst = (index: number): SavedMonst => ({
   index,

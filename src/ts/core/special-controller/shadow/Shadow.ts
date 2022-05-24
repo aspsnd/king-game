@@ -1,5 +1,5 @@
 import { upgradeConfig } from "@pixi/particle-emitter";
-import { Bodies } from "matter-js";
+import { Bodies, Body } from "matter-js";
 import { Sprite } from "pixi.js";
 import { Quark } from "../../../anxi/chain/Quark";
 import { ConstViewer } from "../../../anxi/controller/view-const";
@@ -58,14 +58,64 @@ export class Shadow extends Quark {
     })
   }
 
-  follow(vita: Vita<VitaAttribute>) {
+  /**
+   * @param vita 剑气追向主人
+   * @param num 本次剑气总量
+   */
+  follow(vita: Vita<VitaAttribute>, num: number) {
     this.state = ShadowState.weapon;
-
+    const physics = new PhysicsController<true>(this, {
+      isBody: true,
+      body: Bodies.rectangle(this.x, this.y, 100, 30, {
+        isSensor: true,
+        collisionFilter: {
+          group: -2,
+          mask: 0b11000000,
+          category: 0b00010000
+        }
+      })
+    });
+    const startTime = this.time;
+    const returnTime = 45;
+    const shootedVitas: Vita<VitaAttribute>[] = [];
+    this.on('time', () => {
+      const now = this.time - startTime;
+      if (now > 45) {
+        this.destroy();
+        return true;
+      }
+      const lastTime = 45 - now;
+      const rate = 0.5 - lastTime / returnTime * 0.5;
+      if (lastTime < 20) {
+        this.sprite.alpha = lastTime * 0.05;
+      }
+      const vita_x = vita.x;
+      const vita_y = vita.y;
+      this.x += (vita.x - this.x) * rate;
+      this.y += (vita.y - this.y) * rate;
+      const rotation = this.sprite.rotation = this.y < vita_y ? -Math.atan((this.x - vita_x) / (this.y - vita_y)) : Math.PI - Math.atan((this.x - vita_x) / (this.y - vita_y));
+      Body.setAngle(physics.box, rotation - Math.PI * .5);
+    });
+    physics.on('collisionStart', e => {
+      const enemy = e.data[0].belonger as Vita<VitaAttribute>;
+      if (enemy.group === this.belonger.group) return;
+      if (shootedVitas.includes(enemy)) return;
+      shootedVitas.push(enemy);
+      const affect = new Affect(this.belonger, enemy);
+      affect.hurt.physics = 20 + (8 + num) * 0.1 * enemy.attribute.get('atk');
+      affect.debuffs.push({
+        state: StateCache.beHitBehind.priority,
+        continue: 15
+      });
+      affect.emit();
+    });
+    this.sprite.texture = directStatic('role/0/shadow/2.png');
   }
 
+  sprite: Sprite
   constructor(readonly belonger: Vita<VitaAttribute>, scaleX = 1) {
     super();
-    const sprite = new Sprite(directStatic('role/0/shadow/1.png'));
+    const sprite = this.sprite = new Sprite(directStatic('role/0/shadow/1.png'));
     sprite.anchor.set(.5, .5);
     sprite.scale.x = scaleX;
     this.view = new ConstViewer(this, sprite);

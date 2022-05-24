@@ -1,8 +1,8 @@
 import { SkillProto } from "../../../../anxi/controller/skill/proto";
 import { Affect } from "../../../../core/affect/Affect";
-import { Role } from "../../../../core/chain/role/Role";
-import { VitaAttribute } from "../../../../core/chain/vita/Attribute";
-import { Vita } from "../../../../core/chain/vita/Vita";
+import type { Role } from "../../../../core/chain/role/Role";
+import type { VitaAttribute } from "../../../../core/chain/vita/Attribute";
+import type { Vita } from "../../../../core/chain/vita/Vita";
 
 export const SkillRole0_0: SkillProto = new SkillProto(1000, '轻灵之心', {
   intro: '【被动】增加[8+([等级]/10)%]的闪避率，且每当成功闪避一次攻击会回复自身已损失蓝量的10%。'

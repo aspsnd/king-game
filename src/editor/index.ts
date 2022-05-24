@@ -3,23 +3,22 @@ import { WorldViewController } from "../ts/anxi/controller/base-view/view/WorldV
 import { StateController } from "../ts/anxi/controller/state";
 import { StateItem } from "../ts/anxi/controller/state/item";
 import { MatrixViewer } from "../ts/anxi/controller/view";
+import { Vita } from "../ts/core/chain/vita/Vita";
 import { ActionStruct } from "../ts/anxi/controller/view/action";
 import { CommonClock } from "../ts/clocks/common";
-import { EmptySavedMonst, Monst } from "../ts/core/chain/monst/Monst";
-import { EmptySavedRole, Role } from "../ts/core/chain/role/Role";
+import { EmptySavedMonst } from "../ts/core/chain/monst/Monst";
+import { EmptySavedRole } from "../ts/core/chain/role/Role";
 import { VitaAttribute } from "../ts/core/chain/vita/Attribute";
-import { Vita } from "../ts/core/chain/vita/Vita";
 import { CardWorld } from "../ts/core/chain/world/CardWorld";
 import { TextButton } from "../ts/core/chain/world/controller/Opens/BagComponents/button";
 import { StateCache } from "../ts/core/controller/state/StateCache";
 import { CardData0 } from "../ts/data/card/data/0";
 import { MonstProtos } from "../ts/data/monst";
 import { RoleProtos } from "../ts/data/role";
-import { RoleProto0 } from "../ts/data/role/data/0";
 import { RecordController } from "../ts/net/Record";
 import { loadAllResources } from "./resources";
 import { storage } from "./sto";
-
+import { skillRole0_4Action } from "../ts/data/skill/data/skills/role0_4";
 declare const timeInput: HTMLInputElement;
 // @ts-ignore
 window.__DEV__ = false
@@ -33,7 +32,7 @@ window.onload = async () => {
   await loadAllResources();
 
   StateController.useStateMap(StateCache);
-  const world = new CardWorld(CardData0, RecordController.createRecord(
+  const world = new CardWorld(app, CardData0, RecordController.createRecord(
     [EmptySavedRole(0)]
   ));
 
@@ -58,6 +57,7 @@ window.onload = async () => {
   Vita.prototype.initControllers = function () {
 
     this.stateController = new StateController(this, StateCache);
+
     if (StateController.stateMap[storage.targetState]) {
       const item = new StateItem(0, true)
       this.stateController.insertStateItem(storage.targetState, item);
@@ -114,6 +114,7 @@ window.onload = async () => {
 
   function renderTime(time: number) {
     updateState(time);
+    vita.time = time;
     vita.viewController.onRender();
   }
 
@@ -121,6 +122,8 @@ window.onload = async () => {
   window.vita = vita;
   vita.x = 200;
   vita.y = 300;
+
+  vita.viewController.insertAction(skillRole0_4Action.standard.emit);
 
   vita.land(world);
 

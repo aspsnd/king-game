@@ -69,11 +69,12 @@ export class Flyer extends Quark {
 
         this.emit(new AnxiEvent('hittarget', vita));
 
-        if (!options.affectGetter) return;
+        if (options.affectGetter) {
 
-        const affect = options.affectGetter(vita);
+          const affect = options.affectGetter(vita);
+          affect.emit();
 
-        affect.emit();
+        }
 
         if (options.dieAfterHit) {
           this.die();
@@ -100,7 +101,6 @@ export class Flyer extends Quark {
       return;
     }
 
-    const { physics } = this;
     if (options.speedMode === 'const') {
       const speed = options.speed!;
       this.x += speed[0];

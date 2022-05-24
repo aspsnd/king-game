@@ -5,9 +5,9 @@ import { standardize } from "./util";
 
 // 可编写为plain json配置文件的格式
 export type BaseActionValue = [x: number, y: number] |
-[a: number, y: number, angle: number] |
-[a: number, y: number, angle: number, mirror: boolean] |
-[a: number, y: number, angle: number, scaleX: number, scaleY: number];
+[x: number, y: number, angle: number] |
+[x: number, y: number, angle: number, mirror: boolean] |
+[x: number, y: number, angle: number, scaleX: number, scaleY: number];
 
 // 高度定制，可实现任意效果
 export type CaculatorActionValue = (time: number, state: StateController, quark: Quark) => Matrix

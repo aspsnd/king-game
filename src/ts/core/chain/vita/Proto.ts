@@ -1,8 +1,8 @@
-import { BaseBodyStruct } from "../../../anxi/controller/view";
-import { ActionData, ActionStruct } from "../../../anxi/controller/view/action";
-import { VitaAttribute } from "./Attribute";
-import { Body } from "matter-js";
-import { Vita } from "./Vita";
+import type { BaseBodyStruct } from "../../../anxi/controller/view";
+import type { ActionData, ActionStruct } from "../../../anxi/controller/view/action";
+import type { VitaAttribute } from "./Attribute";
+import type { Body } from "matter-js";
+import type { Vita } from "./Vita";
 
 export interface JumpSpeedFunc {
   (jumpIndex: number, jumpTime: number, speed: number): number

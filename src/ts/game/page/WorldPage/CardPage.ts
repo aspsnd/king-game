@@ -13,7 +13,7 @@ export class CardPage extends Page {
   refreshSelf(): void {
     super.refreshSelf();
     this.removeChildren();
-    const world = this.cardWorld = new CardWorld(this.card, this.game.worldPage.record);
+    const world = this.cardWorld = new CardWorld(this.game.app, this.card, this.game.worldPage.record);
     const renderer = world.get(WorldViewController);
     this.addChild(renderer.container);
     let index = 0;

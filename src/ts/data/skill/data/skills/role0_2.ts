@@ -1,16 +1,16 @@
-import { Graphics, Matrix, RenderTexture, Sprite } from "pixi.js";
+import { Bodies } from "matter-js";
+import { Matrix, RenderTexture, Sprite } from "pixi.js";
 import { SkillProto } from "../../../../anxi/controller/skill/proto";
 import { ConstViewer } from "../../../../anxi/controller/view-const";
-import { VitaAttribute } from "../../../../core/chain/vita/Attribute";
-import { Vita } from "../../../../core/chain/vita/Vita";
-import { CardWorld } from "../../../../core/chain/world/CardWorld";
+import type { VitaAttribute } from "../../../../core/chain/vita/Attribute";
+import type { Vita } from "../../../../core/chain/vita/Vita";
+import type { CardWorld } from "../../../../core/chain/world/CardWorld";
 import { Flyer } from "../../../../core/flyer/Flyer";
 import { ShadowController } from "../../../../core/special-controller/shadow/ShadowController";
-import { Game } from "../../../../game/Game";
 import { canNotUseSkillCommon } from "../helper/state";
 
 export const SkillRole0_2 = new SkillProto(1002, '影攻心', {
-  intro: '【被动】残影会在3秒后爆炸造成伤害并消失。\n【主动】与前方最远的单位互换位置'
+  intro: '【被动】残影会在3秒后爆炸造成伤害并消失。\n【主动】与前方最远的单位互换位置,对路径上最多三个敌人的位置生成一个残影'
 }).active(true)
   .useExtraController(ShadowController)
   .init(function () {
@@ -49,7 +49,8 @@ export const SkillRole0_2 = new SkillProto(1002, '影攻心', {
       width: 300,
       height: 300,
     });
-    Game.instance.app.renderer.render(container, {
+
+    world.app.renderer.render(container, {
       renderTexture,
       skipUpdateTransform: false,
       transform: new Matrix().translate(-oldX + 150, -oldY + 150)
@@ -57,16 +58,37 @@ export const SkillRole0_2 = new SkillProto(1002, '影攻心', {
     const sprite = new Sprite(renderTexture);
     sprite.anchor.set(.5, .5);
 
-    const behaveTime = 10;
+    const behaveTime = 15;
     const speedX = (belonger.x - oldX) / behaveTime;
     const speedY = (belonger.y - oldY) / behaveTime;
 
+    let hasReach = 0;
     const flyer = new Flyer({
       speedMode: 'const',
       angleMode: 'const',
       liveTime: behaveTime,
-      speed: [speedX, speedY]
+      speed: [speedX, speedY],
+      angle: 0,
+      body: Bodies.circle(0, 0, 50, {
+        collisionFilter: {
+          group: -2,
+          mask: 0b11000000,
+          category: 0b00010000
+        }
+      }),
+      checker(target) {
+        return target.group !== belonger.group;
+      }
     });
+
+    const shadowController = belonger.get(ShadowController);
+
+    flyer.on('hittarget', e => {
+      if (hasReach++ >= 3) return true;
+      const enemy = e.data[0];
+      const shadow = shadowController.create(enemy.x, enemy.y, belonger, belonger.face);
+      shadow.land(belonger.world!);
+    })
 
     flyer.on('time', () => {
       sprite.alpha = 0.8 - 0.3 * flyer.time / behaveTime;

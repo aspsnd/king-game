@@ -1,5 +1,5 @@
 import { Atom } from "../../../anxi/chain/Atom";
-import { MoveStruct } from "../../../anxi/chain/Quark";
+import type { MoveStruct } from "../../../anxi/chain/Quark";
 import { SkillController } from "../../../anxi/controller/skill";
 import { Skill } from "../../../anxi/controller/skill/skill";
 import { StateController } from "../../../anxi/controller/state";
@@ -11,10 +11,10 @@ import { ReactionController } from "../../controller/reaction/ReactionController
 import { StateCache } from "../../controller/state/StateCache";
 import { StatingController } from "../../controller/stating/StatingController";
 import { VarController } from "../../controller/variable/VarController";
-import { Wall } from "../wall/Wall";
-import { VitaAttribute } from "./Attribute";
-import { VitaProto } from "./Proto";
-import { SavedVita } from "./SavedVita";
+import type { Wall } from "../wall/Wall";
+import type { VitaAttribute } from "./Attribute";
+import type { VitaProto } from "./Proto";
+import type { SavedVita } from "./SavedVita";
 
 export class Vita<B extends VitaAttribute> extends Atom<B>{
 

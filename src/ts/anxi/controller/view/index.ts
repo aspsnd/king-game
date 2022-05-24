@@ -122,7 +122,7 @@ export class MatrixViewer extends ViewController {
         const stateController = belonger.get(StateController);
         current = action.value[action.frameSelector(useInserted ? this.belonger.time - this.insertTime : time, stateController, belonger)];
       } else {
-        current = getCurrent(action, this.insertedAction?.[bodyIndex] ? this.belonger.time - this.insertTime : time);
+        current = getCurrent(action, useInserted ? this.belonger.time - this.insertTime : time);
       }
       let result = current instanceof Function ? current(time, this.belonger!.get(StateController), this.belonger) : current;
       sprite.transform.setFromMatrix(result);

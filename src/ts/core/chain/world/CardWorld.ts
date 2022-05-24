@@ -1,4 +1,4 @@
-import { Container, isMobile } from "pixi.js";
+import { Application, Container, isMobile } from "pixi.js";
 import { World } from "../../../anxi/chain/World";
 import { WorldViewController } from "../../../anxi/controller/base-view/view/WorldViewer";
 import { PhysicsWorldController, PhysicsWorldOptions } from "../../../anxi/physics/world";
@@ -17,16 +17,15 @@ import { MoveStruct, Quark } from "../../../anxi/chain/Quark";
 import { PanelController } from "../../controller/panel/PanelController";
 import { OpenController, OpenType } from "./controller/OpenController";
 import { generateEquip } from "../../../data/thing/EquipProto";
-import { EquipCache } from "../../controller/equip/EquipCache";
 import { EquipProtos } from "../../../data/thing";
-import { Render } from "matter-js";
-import { StateCache } from "../../controller/state/StateCache";
 import { Skill } from "../../../anxi/controller/skill/skill";
 import { SkillRole0_0 } from "../../../data/skill/data/skills/role0_0";
 import { SkillRole0_1 } from "../../../data/skill/data/skills/role0_1";
 import { Vita } from "../vita/Vita";
 import { VitaAttribute } from "../vita/Attribute";
 import { SkillRole0_2 } from "../../../data/skill/data/skills/role0_2";
+import { SkillRole0_3 } from "../../../data/skill/data/skills/role0_3";
+import { SkillRole0_4 } from "../../../data/skill/data/skills/role0_4";
 
 export class CardWorld extends World {
 
@@ -45,7 +44,7 @@ export class CardWorld extends World {
   physicsController!: PhysicsWorldController;
   openController!: OpenController;
 
-  constructor(readonly cardData: CardData, readonly record: Record) {
+  constructor(readonly app: Application, readonly cardData: CardData, readonly record: Record) {
     super();
 
     const renderer = new WorldViewController(this);
@@ -204,6 +203,8 @@ export class CardWorld extends World {
       role.skillController.add(new Skill(SkillRole0_0), 0);
       role.skillController.add(new Skill(SkillRole0_1), 1);
       role.skillController.add(new Skill(SkillRole0_2), 2);
+      role.skillController.add(new Skill(SkillRole0_3), 3);
+      role.skillController.add(new Skill(SkillRole0_4), 4);
       role.levelController.getExp(100000);
     }
 

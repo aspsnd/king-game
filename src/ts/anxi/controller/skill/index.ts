@@ -13,7 +13,7 @@ export class SkillController extends Controller {
     this.skillIndexs[index] = skill.index;
     this.skillMap.set(skill.index, skill);
     for (const Construct of skill.proto.extraControllers) {
-      new Construct(this.belonger);
+      if (!this.belonger.get(Construct)) new Construct(this.belonger);
     }
     skill.link(this.belonger);
     for (const [k, { rely, caculator, annoy }] of Object.entries(skill.proto.initedAttrs)) {
